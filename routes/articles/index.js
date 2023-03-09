@@ -54,4 +54,15 @@ module.exports = async function (fastify, opts) {
         }
     });
 
+    fastify.delete('/:id', async function (request, reply) {
+        const { id } = request.params;
+        const [rows, fields] = await writerConnection.execute('DELETE FROM posts WHERE id = ?', [id]);
+        if (rows.affectedRows === 0) {
+            reply.code(404).send({ message: 'Post not found' });
+        } else {
+            reply.code(200).send({ message: 'Post deleted successfully' });
+        }
+    });
+
+
 }
