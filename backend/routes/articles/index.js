@@ -13,9 +13,9 @@ const writerConnection = mysql.createPool({
 
 const readerConnection = mysql.createPool({
     host: process.env.READ_HOSTNAME,
-    user: process.env.READ_USERNAME,
-    password: process.env.READ_PASSWORD,
-    database: process.env.READ_DATABASE
+    user: process.env.USERNAME,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
 })
 
 
@@ -34,14 +34,14 @@ module.exports = async function (fastify, opts) {
     })
 
     fastify.get('/', async function (request, reply) {
-        const [rows, fields] = await readerConnection.execute('SELECT * FROM posts');
+        const [rows, fields] = await writerConnection.execute('SELECT * FROM posts');
         const posts = rows.map(({ id, title, content }) => ({ id, title, content }));
         reply.code(200).send(posts);
     })
 
     fastify.get("/:id", async function (request, reply) {
         const { id } = request.params
-        const [rows, fields] = await readerConnection.execute('SELECT * FROM posts WHERE id = ?', [id])
+        const [rows, fields] = await writerConnection.execute('SELECT * FROM posts WHERE id = ?', [id])
         if (rows.length > 0) {
             const { title, content } = rows[0]
             reply.code(200).send({ id, title, content })
