@@ -11,6 +11,13 @@ const writerConnection = mysql.createPool({
     database: process.env.DATABASE
 });
 
+const readerConnection = mysql.createPool({
+    host: process.env.READ_HOSTNAME,
+    user: process.env.READ_USERNAME,
+    password: process.env.READ_PASSWORD,
+    database: process.env.READ_DATABASE
+})
+
 
 
 
