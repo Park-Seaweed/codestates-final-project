@@ -43,4 +43,15 @@ module.exports = async function (fastify, opts) {
         }
     })
 
+    fastify.put('/:id', async function (request, reply) {
+        const { id } = request.params;
+        const { title, content } = request.body;
+        const [rows, fields] = await writerConnection.execute('UPDATE posts SET title = ?, content = ? WHERE id = ?', [title, content, id]);
+        if (rows.affectedRows === 0) {
+            reply.code(404).send({ message: 'Post not found' });
+        } else {
+            reply.code(200).send({ id, title, content });
+        }
+    });
+
 }
