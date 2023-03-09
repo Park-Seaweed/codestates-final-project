@@ -32,4 +32,15 @@ module.exports = async function (fastify, opts) {
         reply.code(200).send(posts);
     })
 
+    fastify.get("/:id", async function (request, reply) {
+        const { id } = request.params
+        const [rows, fields] = await readerConnection.execute('SELECT * FROM posts WHERE id = ?', [id])
+        if (rows.length > 0) {
+            const { title, content } = rows[0]
+            reply.code(200).send({ id, title, content })
+        } else {
+            reply.code(404).send({ message: 'Post not found' })
+        }
+    })
+
 }
