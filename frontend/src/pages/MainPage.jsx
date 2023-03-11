@@ -3,11 +3,12 @@ import MainTable from "../components/MainTable";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
-import { getArticles } from "../api/articleApi";
+import { articleApi } from '../api/articleApi'
+
 
 
 const MainPage = () => {
-    const Articles = useQuery('article_list', getArticles, {
+    const Articles = useQuery('article_list', articleApi.getArticles, {
         onSuccess: (data) => {
             console.log(data.data);
         },

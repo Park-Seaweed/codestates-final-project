@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components'
+import { articleApi } from '../api/articleApi';
 
 const DetailPage = () => {
+
+
     const navigate = useNavigate()
+    const param = useParams()
+    console.log(param.id)
     const onClickAddHandler = () => {
         navigate(`/`)
     }
+    const Articles = useQuery('article_list', articleApi.getArticles, {
+        onSuccess: (data) => {
+            console.log(data.data);
+        },
+    });
+    const oneArticle = Articles?.data?.data?.find(
+        (a) => a.id === parseInt(param.id)
+    )
+    console.log(oneArticle)
     const [isEditing, setIsEditing] = useState(false);
     const handleClick = () => {
         setIsEditing(!isEditing)
@@ -15,13 +30,13 @@ const DetailPage = () => {
     return (
         <div>
 
-            <StTodoCard>
-                <Form>
-                    <TitleInput
-                        type='text' />
-                    <ContentInput />
-                </Form>
-            </StTodoCard>
+            <StContentBox>
+                <TitleBox>
+                    <h3>{oneArticle?.title}</h3>
+                    <p>{oneArticle?.id}</p>
+                </TitleBox>
+                <p>{oneArticle?.content}</p>
+            </StContentBox>
             <StBottom>
                 <div onClick={onClickAddHandler}>목록으로 돌아가기</div>
                 <div>
@@ -57,7 +72,7 @@ export default DetailPage;
 
 
 
-const StTodoCard = styled.div`
+const StContentBox = styled.div`
     margin: 20px 0;
     border-radius: 20px;
     width: 620px;
@@ -130,4 +145,12 @@ const ContentInput = styled.textarea`
     height: 200px;
     outline: none;
     resize: none;
+`;
+
+const TitleBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ffbc3f;
+    padding: 0 1rem;
 `;
