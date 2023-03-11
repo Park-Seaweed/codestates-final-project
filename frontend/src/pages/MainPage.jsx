@@ -1,11 +1,10 @@
 import React from "react";
+import MainTable from "../components/MainTable";
 
 
 const MainPage = () => {
     return (
-        <div>
-            안녕
-        </div>
+        <MainTable />
     )
 }
 
