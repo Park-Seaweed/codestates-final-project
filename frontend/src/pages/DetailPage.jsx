@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 
 const DetailPage = () => {
+    const navigate = useNavigate()
+    const onClickAddHandler = () => {
+        navigate(`/`)
+    }
+    const [isEditing, setIsEditing] = useState(false);
+    const handleClick = () => {
+        setIsEditing(!isEditing)
+        console.log(isEditing)
+    }
     return (
         <div>
+
             <StTodoCard>
                 <Form>
                     <TitleInput
@@ -12,14 +23,30 @@ const DetailPage = () => {
                 </Form>
             </StTodoCard>
             <StBottom>
-                <div >목록으로 돌아가기</div>
+                <div onClick={onClickAddHandler}>목록으로 돌아가기</div>
                 <div>
-                    <StCancelButton>
-                        취소
-                    </StCancelButton>
-                    <StButton type='submit'>
-                        완료
-                    </StButton>
+                    {isEditing ? (
+                        <StCancelButton
+                            onClick={handleClick}
+                        >
+                            취소
+                        </StCancelButton>
+                    ) : (
+                        <StButton onClick={handleClick}>
+                            수정
+                        </StButton>
+                    )}
+                    {isEditing ? (
+                        <StButton type='submit' onClick={handleClick}>
+                            완료
+                        </StButton>
+                    ) : (
+                        <StButton
+                            onClick={handleClick}
+                        >
+                            삭제
+                        </StButton>
+                    )}
                 </div>
             </StBottom>
         </div>
