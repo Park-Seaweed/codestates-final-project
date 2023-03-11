@@ -1,14 +1,20 @@
 import React from "react";
 import MainTable from "../components/MainTable";
+import { useNavigate } from "react-router-dom";
+
 import styled from 'styled-components'
 
 
 const MainPage = () => {
+    const navigate = useNavigate()
+    const onClickAddHandler = () => {
+        navigate(`/add`)
+    }
     return (
         <>
             <MainTable />
             <StBottom>
-                <StButton type='button' >
+                <StButton onClick={onClickAddHandler} type='button' >
                     글쓰기
                 </StButton>
             </StBottom>
