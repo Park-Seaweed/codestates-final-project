@@ -1,37 +1,45 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const MainTable = ({ data }) => {
+    const navigate = useNavigate()
     console.log(data)
+    if (data) {
+        return (
+            <div>
+                <StTable>
+                    <thead>
+                        <tr>
+                            <StTh>제목</StTh>
+                            <StTh>작성자</StTh>
+                            <StTh>작성 시간</StTh>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((item) => {
+                            return (
+                                <tr
+                                    onClick={() =>
 
-    return (
-        <div>
-            <StTable>
-                <thead>
-                    <tr>
-                        <StTh>제목</StTh>
-                        <StTh>작성자</StTh>
-                        <StTh>작성 시간</StTh>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item) => {
-                        return (
-                            <tr
-                                key={item.id}
-                            >
-                                <StTd>{item.title}</StTd>
-                                <StTd>{item.id}</StTd>
-                                <StTd>{item.created_at}</StTd>
-                            </tr>
-                        );
-                    })}
+                                        navigate(`/detail/${item.id}`)
+                                    }
+                                    key={item.id}
+                                >
+                                    <StTd>{item.title}</StTd>
+                                    <StTd>{item.id}</StTd>
+                                    <StTd>{item.created_at}</StTd>
+                                </tr>
+                            );
+                        })}
 
-                </tbody>
-            </StTable>
-        </div >
-    );
-};
+                    </tbody>
+                </StTable>
+            </div >
+        );
+    };
+}
+
 
 export default MainTable;
 
