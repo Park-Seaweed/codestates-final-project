@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MainTable = () => {
+const MainTable = ({ data }) => {
+    console.log(data)
+
     return (
         <div>
             <StTable>
@@ -13,38 +15,21 @@ const MainTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr
-
-                    >
-                        <StTd>나</StTd>
-                        <StTd>나나</StTd>
-                        <StTd>나나나</StTd>
-                    </tr>
-                    <tr
-
-                    >
-                        <StTd>나</StTd>
-                        <StTd>나나</StTd>
-                        <StTd>나나나</StTd>
-                    </tr>
-                    <tr
-
-                    >
-                        <StTd>나</StTd>
-                        <StTd>나나</StTd>
-                        <StTd>나나나</StTd>
-                    </tr>
-                    <tr
-
-                    >
-                        <StTd>나</StTd>
-                        <StTd>나나</StTd>
-                        <StTd>나나나</StTd>
-                    </tr>
+                    {data.map((item) => {
+                        return (
+                            <tr
+                                key={item.id}
+                            >
+                                <StTd>{item.title}</StTd>
+                                <StTd>{item.id}</StTd>
+                                <StTd>{item.created_at}</StTd>
+                            </tr>
+                        );
+                    })}
 
                 </tbody>
             </StTable>
-        </div>
+        </div >
     );
 };
 

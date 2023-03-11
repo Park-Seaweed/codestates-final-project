@@ -1,18 +1,25 @@
 import React from "react";
 import MainTable from "../components/MainTable";
 import { useNavigate } from "react-router-dom";
-
+import { useQuery } from 'react-query'
 import styled from 'styled-components'
+import { getArticles } from "../api/articleApi";
 
 
 const MainPage = () => {
+    const Articles = useQuery('article_list', getArticles, {
+        onSuccess: (data) => {
+            console.log(data.data);
+        },
+    });
+
     const navigate = useNavigate()
     const onClickAddHandler = () => {
         navigate(`/add`)
     }
     return (
         <>
-            <MainTable />
+            <MainTable data={Articles?.data?.data} />
             <StBottom>
                 <StButton onClick={onClickAddHandler} type='button' >
                     글쓰기
