@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components'
 import { articleApi } from '../api/articleApi';
 
 const DetailPage = () => {
 
-
+    const queryClient = useQueryClient()
     const navigate = useNavigate()
     const param = useParams()
     console.log(param.id)
@@ -21,12 +21,13 @@ const DetailPage = () => {
     const oneArticle = Articles?.data?.data?.find(
         (a) => a.id === parseInt(param.id)
     )
-    console.log(oneArticle)
+    const deleteArticleMutation = useMutation(articleApi.deleteArticles, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('article_list');
+        },
+    });
     const [isEditing, setIsEditing] = useState(false);
-    const handleClick = () => {
-        setIsEditing(!isEditing)
-        console.log(isEditing)
-    }
+
     return (
         <div>
 
@@ -42,22 +43,25 @@ const DetailPage = () => {
                 <div>
                     {isEditing ? (
                         <StCancelButton
-                            onClick={handleClick}
+
                         >
                             취소
                         </StCancelButton>
                     ) : (
-                        <StButton onClick={handleClick}>
+                        <StButton >
                             수정
                         </StButton>
                     )}
                     {isEditing ? (
-                        <StButton type='submit' onClick={handleClick}>
+                        <StButton type='submit' >
                             완료
                         </StButton>
                     ) : (
                         <StButton
-                            onClick={handleClick}
+                            onClick={() => {
+                                deleteArticleMutation.mutate(oneArticle.id)
+                                navigate(`/`)
+                            }}
                         >
                             삭제
                         </StButton>
@@ -127,25 +131,7 @@ const StCancelButton = styled.button`
     rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
 `;
 
-const TitleInput = styled.input`
-    border: none;
-    border-bottom: 1px solid #ffbc3f;
-    padding: 15px;
-    outline: none;
-`;
 
-const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-`;
-
-const ContentInput = styled.textarea`
-    border: none;
-    padding: 15px;
-    height: 200px;
-    outline: none;
-    resize: none;
-`;
 
 const TitleBox = styled.div`
     display: flex;

@@ -19,14 +19,14 @@ const MainPage = () => {
         navigate(`/add`)
     }
     return (
-        <>
+        <div>
             <MainTable data={Articles?.data?.data} />
             <StBottom>
                 <StButton onClick={onClickAddHandler} type='button' >
                     글쓰기
                 </StButton>
             </StBottom>
-        </>
+        </div>
 
     )
 }

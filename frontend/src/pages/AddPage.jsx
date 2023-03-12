@@ -1,28 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components'
+import { articleApi } from "../api/articleApi";
 
 const AddPage = () => {
+    const [title, setTitle] = useState("")
+    const [content, setContent] = useState("")
     const navigate = useNavigate()
+    const queryClient = useQueryClient()
+    const addArticleMutation = useMutation(articleApi.addArticles, {
+        onSuccess: (responseData) => {
+            queryClient.invalidateQueries("article_list")
+            setTitle("")
+            setContent("")
+            navigate(`/`)
+        }
+    })
     const onClickAddHandler = () => {
+        if (title === "" || content === "") {
+            return
+        }
+        const data = {
+            title,
+            content
+        }
+        addArticleMutation.mutate(data)
+
+    }
+
+    const handleMainClick = () => {
         navigate(`/`)
     }
+
     return (
         <div>
             <StTodoCard>
                 <TitleInput
-                    // value={title}
+                    value={title}
+                    onChange={(e) =>
+                        setTitle(e.target.value)
 
+                    }
                     placeholder='제목을 입력하세요.'
                 />
                 <ContentInput
-                    // value={content}
+                    onChange={(e) =>
+                        setContent(e.target.value)
+                    }
+                    value={content}
 
                     placeholder='내용을 입력하세요.'
                 />
             </StTodoCard>
             <StBottom>
-                <div>목록으로 돌아가기</div>
+                <div onClick={handleMainClick}>목록으로 돌아가기</div>
                 <StButton onClick={onClickAddHandler} >등록</StButton>
             </StBottom>
         </div>
