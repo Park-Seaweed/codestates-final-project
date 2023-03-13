@@ -104,7 +104,14 @@ resource "aws_route_table_association" "rds_subnet_association" {
 
 
 resource "aws_route" "private_subnet_route" {
-  route_table_id         = [aws_route_table.final_private_rtb.id, aws_route_table.final_rds_rtb.id]
+  route_table_id         = aws_route_table.final_private_rtb.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.nat_gateway.id
+  depends_on             = [aws_nat_gateway.nat_gateway]
+}
+
+resource "aws_route" "rds_subnet_route" {
+  route_table_id         = aws_route_table.final_rds_rtb.id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.nat_gateway.id
   depends_on             = [aws_nat_gateway.nat_gateway]
