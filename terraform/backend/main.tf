@@ -15,7 +15,7 @@ provider "aws" {
 module "network" {
   source = "./module/network"
 
-  vpc = "172.16.0.0"
+  vpc = "172.16.0.0/16"
 
   public_subnet_cidr_list = [
     "172.16.1.0/24",
