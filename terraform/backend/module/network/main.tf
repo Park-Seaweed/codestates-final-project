@@ -30,6 +30,9 @@ resource "aws_route_table" "final_public_rtb" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.final_igw.id
   }
+  tags = {
+    Name = "final-public-route-table"
+  }
 }
 
 resource "aws_route_table_association" "public_rtb_association" {
@@ -75,7 +78,15 @@ resource "aws_route_table" "final_private_rtb" {
   vpc_id = aws_vpc.final_terraform.id
 
   tags = {
-    Name = "my-private-route-table"
+    Name = "final-private-route-table"
+  }
+}
+
+resource "aws_route_table" "final_rds_rtb" {
+  vpc_id = aws_vpc.final_terraform.id
+
+  tags = {
+    Name = "final-rds-route-table"
   }
 }
 
@@ -85,9 +96,15 @@ resource "aws_route_table_association" "private_subnet_association" {
   route_table_id = aws_route_table.final_private_rtb.id
 }
 
+resource "aws_route_table_association" "rds_subnet_association" {
+  count          = 2
+  subnet_id      = aws_subnet.rds_subnet[count.index].id
+  route_table_id = aws_route_table.final_rds_rtb.id
+}
+
 
 resource "aws_route" "private_subnet_route" {
-  route_table_id         = aws_route_table.final_private_rtb.id
+  route_table_id         = [aws_route_table.final_private_rtb.id, aws_route_table.final_rds_rtb.id]
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.nat_gateway.id
   depends_on             = [aws_nat_gateway.nat_gateway]
