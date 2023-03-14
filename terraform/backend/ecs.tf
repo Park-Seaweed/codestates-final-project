@@ -25,6 +25,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
 }
 
 resource "aws_ecs_service" "final_ecs_service" {
+  count           = 2
   name            = "final-ecs-service"
   cluster         = aws_ecs_cluster.final_ecs_cluster.id
   task_definition = aws_ecs_task_definition.final_ecs_task_definition.arn
@@ -32,7 +33,7 @@ resource "aws_ecs_service" "final_ecs_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = [module.network.private_subnet_id]
+    subnets         = module.network.private_subnet_id[count.index]
     security_groups = [aws_security_group.ecs_alb_sg.id]
   }
 }
