@@ -33,7 +33,7 @@ resource "aws_ecs_service" "final_ecs_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = module.network.private_subnet_id[count.index]
+    subnets         = module.network.private_subnet_id
     security_groups = [aws_security_group.ecs_alb_sg.id]
   }
 }
