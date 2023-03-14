@@ -39,7 +39,7 @@ resource "aws_ecs_service" "final_ecs_service" {
 
   network_configuration {
     subnets         = module.network.private_subnet_id
-    security_groups = [aws_security_group.ecs_alb_sg.id]
+    security_groups = [aws_security_group.ecs_task_sg.id]
   }
 
   load_balancer {
