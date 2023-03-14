@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "final_ecs_task_definition" {
 
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
-  container_definitions = file("./demo-td-revision6.json")
+  container_definitions = jsonencode(file("./demo-td-revision6.json"))
 
 
 
