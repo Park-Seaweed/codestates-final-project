@@ -25,6 +25,8 @@ resource "aws_security_group" "ecs_task_sg" {
     prefix_list_ids  = []
     self             = false
     security_groups  = []
+    description      = "NONE"
+
   }]
 }
 
@@ -65,6 +67,8 @@ resource "aws_security_group" "ecs_alb_sg" {
     prefix_list_ids  = []
     self             = false
     security_groups  = []
+    description      = "NONE"
+
   }]
 }
 
