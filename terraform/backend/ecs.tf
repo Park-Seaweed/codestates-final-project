@@ -1,5 +1,10 @@
 resource "aws_ecs_cluster" "final_ecs_cluster" {
   name = "final-test-ecs-cluster"
+
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
@@ -36,6 +41,13 @@ resource "aws_ecs_service" "final_ecs_service" {
     subnets         = module.network.private_subnet_id
     security_groups = [aws_security_group.ecs_alb_sg.id]
   }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
+    container_name   = "final-test-api"
+    container_port   = 3000
+  }
+
   depends_on = [
     aws_lb_listener.http_forward,
     aws_iam_role_policy_attachment.ecs_task_execution_role_policy

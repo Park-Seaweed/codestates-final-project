@@ -10,10 +10,11 @@ resource "aws_lb" "final_ecs_alb" {
 }
 
 resource "aws_lb_target_group" "ecs_alb_tg" {
-  name     = "ecs-alb-tg"
-  port     = 3000
-  protocol = "HTTP"
-  vpc_id   = module.network.vpc_id
+  name        = "ecs-alb-tg"
+  port        = 3000
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = module.network.vpc_id
 
   health_check {
     enabled             = true
