@@ -12,6 +12,8 @@ resource "aws_security_group" "ecs_task_sg" {
     ipv6_cidr_blocks = []
     prefix_list_ids  = []
     self             = false
+    cidr_blocks      = []
+
 
 
 
