@@ -1,6 +1,6 @@
 resource "aws_lb" "final_ecs_alb" {
   name               = "final-ecs-alb"
-  subnets            = module.network.private_subnet_id
+  subnets            = module.network.public_subnet_id
   load_balancer_type = "application"
   security_groups    = [aws_security_group.ecs_alb_sg.id]
 
