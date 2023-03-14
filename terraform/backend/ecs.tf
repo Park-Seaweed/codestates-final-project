@@ -42,11 +42,11 @@ resource "aws_ecs_service" "final_ecs_service" {
     security_groups = [aws_security_group.ecs_task_sg.id]
   }
 
-  #   load_balancer {
-  #     target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
-  #     container_name   = "final-test-api"
-  #     container_port   = 3000
-  #   }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
+    container_name   = "final-test-api"
+    container_port   = 3000
+  }
 
   depends_on = [
     aws_lb_listener.http_forward,
@@ -66,11 +66,11 @@ resource "aws_ecs_task_definition" "final_ecs_task_definition" {
   container_definitions = file("./demo-td-revision6.json")
 }
 
-resource "aws_lb_target_group_attachment" "alb_tga" {
-  target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
-  target_id        = aws_ecs_service.final_ecs_service.arn
-  port             = 3000
-}
+# resource "aws_lb_target_group_attachment" "alb_tga" {
+#   target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
+#   target_id        = aws_ecs_service.final_ecs_service.id
+#   port             = 3000
+# }
 
 
 
