@@ -4,7 +4,7 @@ resource "aws_security_group" "ecs_task_sg" {
 
   ingress = [{
 
-    description      = "value"
+    description      = "3000"
     from_port        = 3000
     protocol         = "tcp"
     security_groups  = [aws_security_group.ecs_alb_sg.id]
@@ -33,6 +33,7 @@ resource "aws_security_group" "ecs_alb_sg" {
   name   = "ecs-alb-sg"
 
   ingress = [{
+    description      = "80"
     cidr_blocks      = ["0.0.0.0/0"]
     from_port        = 80
     protocol         = "tcp"
@@ -44,6 +45,7 @@ resource "aws_security_group" "ecs_alb_sg" {
 
     },
     {
+      description      = "443"
       cidr_blocks      = ["0.0.0.0/0"]
       from_port        = 443
       protocol         = "tcp"
