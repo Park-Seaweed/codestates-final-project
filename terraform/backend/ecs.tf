@@ -36,6 +36,10 @@ resource "aws_ecs_service" "final_ecs_service" {
     subnets         = module.network.private_subnet_id
     security_groups = [aws_security_group.ecs_alb_sg.id]
   }
+  depends_on = [
+    aws_lb_listener.http_forward,
+    aws_iam_role_policy_attachment.ecs_task_execution_role_policy
+  ]
 }
 
 resource "aws_ecs_task_definition" "final_ecs_task_definition" {
