@@ -67,7 +67,6 @@ resource "aws_ecs_task_definition" "final_ecs_task_definition" {
 }
 
 resource "aws_lb_target_group_attachment" "alb_tga" {
-  count            = 2
   target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
   target_id        = aws_ecs_service.final_ecs_service.id
   port             = 3000
