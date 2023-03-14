@@ -1,117 +1,115 @@
-[
-    {
-        "containerDefinitions": [
-            {
-                "name": "final-test-api",
-                "image": "901512289056.dkr.ecr.ap-northeast-2.amazonaws.com/demo-project4:v5",
-                "cpu": 0,
-                "portMappings": [
-                    {
-                        "name": "final-test-api-3000-tcp",
-                        "containerPort": 3000,
-                        "hostPort": 3000,
-                        "protocol": "tcp",
-                        "appProtocol": "http"
-                    }
-                ],
-                "essential": true,
-                "environment": [],
-                "environmentFiles": [],
-                "mountPoints": [],
-                "volumesFrom": [],
-                "secrets": [
-                    {
-                        "name": "HOSTNAME",
-                        "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:HOSTNAME::"
-                    },
-                    {
-                        "name": "PASSWORD",
-                        "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:PASSWORD::"
-                    },
-                    {
-                        "name": "DATABASE",
-                        "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:DATABASE::"
-                    },
-                    {
-                        "name": "READ_HOSTNAME",
-                        "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:READ_HOSTNAME::"
-                    },
-                    {
-                        "name": "USERNAME",
-                        "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:USERNAME::"
-                    }
-                ],
-                "logConfiguration": {
-                    "logDriver": "awslogs",
-                    "options": {
-                        "awslogs-create-group": "true",
-                        "awslogs-group": "/ecs/test/example",
-                        "awslogs-region": "ap-northeast-2",
-                        "awslogs-stream-prefix": "ecs"
-                    }
+{
+    "containerDefinitions": [
+        {
+            "name": "final-test-api",
+            "image": "901512289056.dkr.ecr.ap-northeast-2.amazonaws.com/demo-project4:v5",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "final-test-api-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "secrets": [
+                {
+                    "name": "HOSTNAME",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:HOSTNAME::"
+                },
+                {
+                    "name": "PASSWORD",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:PASSWORD::"
+                },
+                {
+                    "name": "DATABASE",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:DATABASE::"
+                },
+                {
+                    "name": "READ_HOSTNAME",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:READ_HOSTNAME::"
+                },
+                {
+                    "name": "USERNAME",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:USERNAME::"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/test/example",
+                    "awslogs-region": "ap-northeast-2",
+                    "awslogs-stream-prefix": "ecs"
                 }
             }
-        ],
-        "family": "demo-td",
-        "taskRoleArn": "arn:aws:iam::901512289056:role/ecsTaskExecutionRole",
-        "executionRoleArn": "arn:aws:iam::901512289056:role/ecsTaskExecutionRole",
-        "networkMode": "awsvpc",
-        "revision": 6,
-        "volumes": [],
-        "status": "ACTIVE",
-        "requiresAttributes": [
-            {
-                "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-            },
-            {
-                "name": "ecs.capability.execution-role-awslogs"
-            },
-            {
-                "name": "com.amazonaws.ecs.capability.ecr-auth"
-            },
-            {
-                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-            },
-            {
-                "name": "ecs.capability.secrets.asm.environment-variables"
-            },
-            {
-                "name": "com.amazonaws.ecs.capability.task-iam-role"
-            },
-            {
-                "name": "ecs.capability.execution-role-ecr-pull"
-            },
-            {
-                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-            },
-            {
-                "name": "ecs.capability.task-eni"
-            },
-            {
-                "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-            }
-        ],
-        "placementConstraints": [],
-        "compatibilities": [
-            "EC2",
-            "FARGATE"
-        ],
-        "requiresCompatibilities": [
-            "FARGATE"
-        ],
-        "cpu": 512,
-        "memory": 1024,
-        "runtimePlatform": {
-            "cpuArchitecture": "X86_64",
-            "operatingSystemFamily": "LINUX"
+        }
+    ],
+    "family": "demo-td",
+    "taskRoleArn": "arn:aws:iam::901512289056:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::901512289056:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 6,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
         },
-        "registeredAt": "2023-03-12T13:43:02.874Z",
-        "registeredBy": "arn:aws:iam::901512289056:user/Administrator",
-        "tags": [
-            {
-                "key": "Name",
-                "value": "final-test-td"
-            }
-        ]
-    }
-]
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.secrets.asm.environment-variables"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": 512,
+    "memory": 1024,
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2023-03-12T13:43:02.874Z",
+    "registeredBy": "arn:aws:iam::901512289056:user/Administrator",
+    "tags": [
+        {
+            "key": "Name",
+            "value": "final-test-td"
+        }
+    ]
+}
