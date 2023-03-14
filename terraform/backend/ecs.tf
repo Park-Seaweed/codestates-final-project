@@ -64,10 +64,15 @@ resource "aws_ecs_task_definition" "final_ecs_task_definition" {
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
   container_definitions = file("./demo-td-revision6.json")
-
-
-
 }
+
+resource "aws_lb_target_group_attachment" "alb_tga" {
+  count            = 2
+  target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
+  target_id        = aws_ecs_service.final_ecs_service.id
+  port             = 3000
+}
+
 
 
 
