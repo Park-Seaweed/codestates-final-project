@@ -51,60 +51,7 @@ resource "aws_ecs_task_definition" "final_ecs_task_definition" {
 
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
-  container_definitions = <<TASK_DEFINITION
-[
-    {
-        "name": "final-test-api",
-        "image": "901512289056.dkr.ecr.ap-northeast-2.amazonaws.com/demo-project4:v5",
-        "cpu": 0,
-        "portMappings": [
-            {
-                "name": "final-test-api-3000-tcp",
-                "containerPort": 3000,
-                "hostPort": 3000,
-                "protocol": "tcp",
-                "appProtocol": "http"
-            }
-        ],
-        "essential": true,
-        "environment": [],
-        "environmentFiles": [],
-        "mountPoints": [],
-        "volumesFrom": [],
-        "secrets": [
-            {
-                "name": "HOSTNAME",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:HOSTNAME::"
-            },
-            {
-                "name": "PASSWORD",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:PASSWORD::"
-            },
-            {
-                "name": "DATABASE",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:DATABASE::"
-            },
-            {
-                "name": "READ_HOSTNAME",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:READ_HOSTNAME::"
-            },
-            {
-                "name": "USERNAME",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:USERNAME::"
-            }
-        ],
-        "logConfiguration": {
-            "logDriver": "awslogs",
-            "options": {
-                "awslogs-create-group": "true",
-                "awslogs-group": "/ecs/test/example",
-                "awslogs-region": "ap-northeast-2",
-                "awslogs-stream-prefix": "ecs"
-            }
-        }
-    }
-]
-TASK_DEFINITION
+  container_definitions = file("./demo-td-revision6.json")
 
 
 
