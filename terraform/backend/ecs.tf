@@ -42,11 +42,11 @@ resource "aws_ecs_service" "final_ecs_service" {
     security_groups = [aws_security_group.ecs_task_sg.id]
   }
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
-    container_name   = "final-test-api"
-    container_port   = 3000
-  }
+  #   load_balancer {
+  #     target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
+  #     container_name   = "final-test-api"
+  #     container_port   = 3000
+  #   }
 
   depends_on = [
     aws_lb_listener.http_forward,
