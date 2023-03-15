@@ -8,7 +8,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
   backup_retention_period = 1
   preferred_backup_window = "07:00-09:00"
   skip_final_snapshot     = true
-  availability_zones      = [module.network.availability_zone_list]
+  availability_zones      = [module.network.availability_zone_list[0], module.network.availability_zone_list[1]]
 
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 }
