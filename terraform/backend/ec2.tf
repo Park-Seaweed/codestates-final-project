@@ -91,9 +91,10 @@ resource "aws_instance" "vpn_instance" {
   iam_instance_profile        = aws_iam_instance_profile.ssm_instance_profile.name
   user_data                   = <<-EOF
                #!/bin/bash
-               echo "Hello, World" > index.html
-               nohup busybox httpd -f -p 8080 &
-               EOF
+              sudo yum install -y amazon-ssm-agent
+              sudo systemctl enable amazon-ssm-agent
+              sudo systemctl start amazon-ssm-agent
+              EOF
 
   tags = {
     Name = "final-vpn-1"
