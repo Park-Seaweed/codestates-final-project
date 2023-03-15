@@ -47,11 +47,11 @@
 #   name = "session-manager-instance-profile"
 #   role = aws_iam_role.session_manager_role.name
 # }
-resource "aws_ssm_association" "ssm_association" {
-  name = "AWS-RunShellScript"
+# resource "aws_ssm_association" "ssm_association" {
+#   name = "AWS-RunShellScript"
 
-  instance_id = aws_instance.vpn_instance.id
-}
+#   instance_id = aws_instance.vpn_instance.id
+# }
 
 resource "aws_iam_role" "ssm_role" {
   name = "SSMRole"
