@@ -43,6 +43,11 @@ resource "aws_iam_role_policy_attachment" "session_manager_policy" {
   role       = aws_iam_role.session_manager_role.name
 }
 
+resource "aws_iam_instance_profile" "session_manager_instance_profile" {
+  name = "session-manager-instance-profile"
+  role = aws_iam_role.session_manager_role.name
+}
+
 
 resource "aws_instance" "vpn_instance" {
   ami                         = var.vpn_ami
@@ -51,7 +56,7 @@ resource "aws_instance" "vpn_instance" {
   subnet_id                   = module.network.public_subnet_id[0]
   key_name                    = "myKey"
   associate_public_ip_address = "true"
-  iam_instance_profile        = aws_iam_role.session_manager_role.name
+  iam_instance_profile        = aws_iam_instance_profile.session_manager_instance_profile.name
   user_data                   = <<-EOF
                #!/bin/bash
                echo "Hello, World" > index.html
