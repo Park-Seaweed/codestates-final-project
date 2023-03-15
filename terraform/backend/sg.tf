@@ -143,7 +143,7 @@ resource "aws_security_group" "rds_sg" {
   ingress = [{
     cidr_blocks      = []
     description      = "rds-task-sg"
-    from_port        = 3306
+    from_port        = 0
     ipv6_cidr_blocks = []
     prefix_list_ids  = []
     protocol         = "tcp"
@@ -154,7 +154,7 @@ resource "aws_security_group" "rds_sg" {
     {
       cidr_blocks      = ["172.16.0.0/16"]
       description      = "vpc"
-      from_port        = 3306
+      from_port        = 0
       ipv6_cidr_blocks = []
       prefix_list_ids  = []
       protocol         = "tcp"
