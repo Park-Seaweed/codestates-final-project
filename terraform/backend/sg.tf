@@ -159,6 +159,10 @@ resource "aws_security_group" "rds_sg" {
       prefix_list_ids  = []
       protocol         = "tcp"
       security_groups  = []
+      to_port          = 3306
+      self             = false
+
+
   }]
   egress = [{
     cidr_blocks      = ["0.0.0.0/0"]
