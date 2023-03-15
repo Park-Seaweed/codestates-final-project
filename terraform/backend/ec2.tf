@@ -26,7 +26,7 @@ resource "aws_instance" "vpn_instance" {
   ami                         = var.vpn_ami
   instance_type               = "t2.micro"
   vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
-  subnet_id                   = module.network.public_subnet_id
+  subnet_id                   = module.network.public_subnet_id[0]
   key_name                    = "myKey"
   associate_public_ip_address = "true"
   user_data                   = <<-EOF
