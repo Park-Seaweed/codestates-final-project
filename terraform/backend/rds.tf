@@ -12,7 +12,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
     "ap-northeast-2a",
     "ap-northeast-2b"
   ]
-  db_subnet_group_name = aws_db_subnet_group.aurora_subnet_group.arn
+  db_subnet_group_name = aws_db_subnet_group.aurora_subnet_group.id
 
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 }
