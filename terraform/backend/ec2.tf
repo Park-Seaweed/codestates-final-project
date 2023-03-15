@@ -49,6 +49,15 @@ resource "aws_iam_instance_profile" "session_manager_instance_profile" {
 }
 
 
+resource "aws_eip" "ec2" {
+  instance = aws_instance.vpn_instance.id
+  vpc      = true
+
+  tags = {
+    Name = "final-vpn-eip"
+  }
+}
+
 resource "aws_instance" "vpn_instance" {
   ami                         = var.vpn_ami
   instance_type               = "t2.micro"

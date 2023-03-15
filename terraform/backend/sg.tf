@@ -3,7 +3,7 @@ resource "aws_security_group" "ec2_sg" {
   name   = "ec2-sg"
 
   ingress = [{
-    cidr_blocks      = []
+    cidr_blocks      = ["0.0.0.0/0"]
     description      = "none"
     from_port        = 943
     ipv6_cidr_blocks = []
@@ -14,7 +14,7 @@ resource "aws_security_group" "ec2_sg" {
     to_port          = 943
     },
     {
-      cidr_blocks      = []
+      cidr_blocks      = ["0.0.0.0/0"]
       description      = "none"
       from_port        = 945
       ipv6_cidr_blocks = []
@@ -25,7 +25,7 @@ resource "aws_security_group" "ec2_sg" {
       to_port          = 945
     },
     {
-      cidr_blocks      = []
+      cidr_blocks      = ["0.0.0.0/0"]
       description      = "none"
       from_port        = 1194
       ipv6_cidr_blocks = []
@@ -36,7 +36,7 @@ resource "aws_security_group" "ec2_sg" {
       to_port          = 1194
     },
     {
-      cidr_blocks      = []
+      cidr_blocks      = ["0.0.0.0/0"]
       description      = "none"
       from_port        = 8080
       ipv6_cidr_blocks = []
@@ -45,6 +45,17 @@ resource "aws_security_group" "ec2_sg" {
       security_groups  = []
       self             = false
       to_port          = 8080
+    },
+    {
+      cidr_blocks      = ["0.0.0.0/0"]
+      description      = "none"
+      from_port        = 22
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      protocol         = "tcp"
+      security_groups  = []
+      self             = false
+      to_port          = 22
   }]
   egress = [{
     cidr_blocks      = ["0.0.0.0/0"]
@@ -143,7 +154,7 @@ resource "aws_security_group" "rds_sg" {
   ingress = [{
     cidr_blocks      = []
     description      = "rds-task-sg"
-    from_port        = 0
+    from_port        = 3306
     ipv6_cidr_blocks = []
     prefix_list_ids  = []
     protocol         = "tcp"
@@ -154,7 +165,7 @@ resource "aws_security_group" "rds_sg" {
     {
       cidr_blocks      = ["172.16.0.0/16"]
       description      = "vpc"
-      from_port        = 0
+      from_port        = 3306
       ipv6_cidr_blocks = []
       prefix_list_ids  = []
       protocol         = "tcp"
