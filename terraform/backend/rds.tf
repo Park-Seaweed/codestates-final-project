@@ -1,6 +1,6 @@
 resource "aws_rds_cluster" "aurora_cluster" {
   cluster_identifier      = "aurora-cluster"
-  engine                  = "awurora-mysql"
+  engine                  = "aurora-mysql"
   engine_version          = "5.7.mysql_aurora.2.11.1"
   database_name           = "final-database"
   master_username         = var.database_name
