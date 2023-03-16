@@ -80,8 +80,8 @@ resource "aws_ecs_service" "final_ecs_service" {
 data "template_file" "service" {
   template = file("./demo-td-revision6.json.tpl")
   vars = {
-    db_hostname        = aws_secretsmanager_secret.hostname.arn
-    db_reader_hostname = aws_secretsmanager_secret.read_hostname.arn
+    db_hostname        = aws_rds_cluster.aurora_cluster.endpoint
+    db_reader_hostname = aws_rds_cluster.aurora_cluster.reader_endpoint
     db_password        = aws_secretsmanager_secret.db_password
     db_name            = aws_secretsmanager_secret.db_username
     database           = aws_secretsmanager_secret.database

@@ -21,10 +21,3 @@ variable "vpn_ami" {
   type        = string
 
 }
-variable "rds_cluster_write_endpoint" {
-  default = aws_rds_cluster.aurora_cluster.endpoint
-}
-
-variable "rds_cluster_read_endpoint" {
-  default = aws_rds_cluster.aurora_cluster.reader_endpoint
-}
