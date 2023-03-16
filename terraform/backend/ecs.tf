@@ -50,6 +50,8 @@ resource "aws_iam_role_policy_attachment" "secretsmanager_attachment" {
   role       = aws_iam_role.ecs_task_execution_role.name
 }
 
+
+
 resource "aws_ecs_service" "final_ecs_service" {
 
   name            = "final-ecs-service"
@@ -75,6 +77,20 @@ resource "aws_ecs_service" "final_ecs_service" {
   ]
 }
 
+data "template_file" "service" {
+  template = file("./demo-td-revision6.json.tpl")
+  vars = {
+    db_hostname        = aws_secretsmanager_secret.hostname.arn
+    db_reader_hostname = aws_secretsmanager_secret.read_hostname.arn
+    db_password        = aws_secretsmanager_secret.db_password
+    db_name            = aws_secretsmanager_secret.db_username
+    database           = aws_secretsmanager_secret.database
+
+
+
+  }
+}
+
 resource "aws_ecs_task_definition" "final_ecs_task_definition" {
   family                   = "final-ecs-task"
   requires_compatibilities = ["FARGATE"]
@@ -84,17 +100,8 @@ resource "aws_ecs_task_definition" "final_ecs_task_definition" {
 
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
-  container_definitions = file("./demo-td-revision6.json")
+  container_definitions = data.template_file.service.rendered
 }
-
-# resource "aws_lb_target_group_attachment" "alb_tga" {
-#   target_group_arn = aws_lb_target_group.ecs_alb_tg.arn
-#   target_id        = aws_ecs_service.final_ecs_service.id
-#   port             = 3000
-# }
-
-
-
 
 
 resource "aws_cloudwatch_log_group" "final_ecs_log_group" {

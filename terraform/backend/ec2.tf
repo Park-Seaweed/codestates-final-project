@@ -1,58 +1,3 @@
-# data "aws_iam_policy_document" "ec2_assume_role" {
-#   statement {
-#     actions = ["sts:AssumeRole"]
-#     principals {
-#       type        = "Service"
-#       identifiers = ["ec2.amazonaws.com"]
-#     }
-#   }
-# }
-# data "aws_iam_policy" "systems_manager" {
-#   arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-# }
-
-
-# resource "aws_iam_role" "ec2_role" {
-#   name               = "ec2-ssm-role"
-#   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
-# }
-
-# resource "aws_iam_role_policy_attachment" "ec2_ssm" {
-#   role       = aws_iam_role.ec2_role.name
-#   policy_arn = data.aws_iam_policy.systems_manager.arn
-# }
-
-# resource "aws_iam_role" "session_manager_role" {
-#   name = "session-manager-role"
-#   assume_role_policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Effect = "Allow"
-#         Principal = {
-#           Service = "ssm.amazonaws.com"
-#         }
-#         Action = "sts:AssumeRole"
-#       },
-#     ]
-#   })
-# }
-
-# resource "aws_iam_role_policy_attachment" "session_manager_policy" {
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-#   role       = aws_iam_role.session_manager_role.name
-# }
-
-# resource "aws_iam_instance_profile" "session_manager_instance_profile" {
-#   name = "session-manager-instance-profile"
-#   role = aws_iam_role.session_manager_role.name
-# }
-# resource "aws_ssm_association" "ssm_association" {
-#   name = "AWS-RunShellScript"
-
-#   instance_id = aws_instance.vpn_instance.id
-# }
-
 resource "aws_iam_role" "ssm_role" {
   name = "SSMRole"
 
@@ -70,8 +15,33 @@ resource "aws_iam_role" "ssm_role" {
   })
 }
 
+resource "aws_iam_role_policy" "this" {
+  name = "EC2-Inline-Policy"
+  role = aws_iam_role.ssm_role.id
+  policy = jsonencode(
+    {
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Effect" : "Allow",
+          "Action" : [
+            "ssm:GetParameter"
+          ],
+          "Resource" : "*"
+        }
+      ]
+    }
+  )
+}
+
+
 resource "aws_iam_role_policy_attachment" "ssm_managed_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  role       = aws_iam_role.ssm_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "ssm_cloudwatch" {
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
   role       = aws_iam_role.ssm_role.name
 }
 
@@ -80,6 +50,19 @@ resource "aws_iam_instance_profile" "ssm_instance_profile" {
   role = aws_iam_role.ssm_role.name
 }
 
+resource "aws_eip" "vpn_eip" {
+  instance = aws_instance.vpn_instance.id
+}
+
+resource "aws_eip_association" "vpn_eip_assoc" {
+  instance_id   = aws_instance.vpn_instance.id
+  allocation_id = aws_eip.vpn_eip.id
+}
+
+
+# resource "aws_cloudwatch_log_group" "ssm_logs" {
+#   name = "/final/ssm"
+# }
 
 resource "aws_instance" "vpn_instance" {
   ami                         = var.vpn_ami

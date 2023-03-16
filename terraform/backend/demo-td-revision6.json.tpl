@@ -20,23 +20,23 @@
         "secrets": [
             {
                 "name": "HOSTNAME",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:HOSTNAME::"
+                "valueFrom": "${db_hostname}"
             },
             {
                 "name": "PASSWORD",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:PASSWORD::"
+                "valueFrom": "${db_password}"
             },
             {
                 "name": "DATABASE",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:DATABASE::"
+                "valueFrom": "${database}"
             },
             {
                 "name": "READ_HOSTNAME",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:READ_HOSTNAME::"
+                "valueFrom": "${db_reader_hostname}"
             },
             {
                 "name": "USERNAME",
-                "valueFrom": "arn:aws:secretsmanager:ap-northeast-2:901512289056:secret:demo-P2n0cc:USERNAME::"
+                "valueFrom": "${db_name}"
             }
         ],
         "logConfiguration": {
