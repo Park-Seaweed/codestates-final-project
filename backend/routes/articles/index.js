@@ -1,6 +1,5 @@
 'use strict'
 
-
 const mysql = require('mysql2/promise');
 require('dotenv').config()
 
@@ -20,6 +19,12 @@ const readerConnection = mysql.createPool({
 
 
 module.exports = async function (fastify, opts) {
+
+    fastify.addHook('onRequest', (request, reply, done) => {
+        const realClientIp = request.headers['x-forwarded-for'] || request.socket.remoteAddress
+        fastify.log.info({ realClientIp }, 'Request received')
+        done()
+    })
 
 
     fastify.post('/', async function (request, reply) {
@@ -65,6 +70,4 @@ module.exports = async function (fastify, opts) {
             reply.code(200).send({ message: 'Post deleted successfully' });
         }
     });
-
-
 }
