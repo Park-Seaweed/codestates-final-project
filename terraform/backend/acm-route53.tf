@@ -7,7 +7,7 @@ resource "aws_acm_certificate" "cert" {
   }
 
   lifecycle {
-    create_before_destroy = true
+    create_before_destroy = false
   }
 }
 
@@ -58,6 +58,6 @@ resource "aws_route53_record" "alb" {
   }
 
   lifecycle {
-    create_before_destroy = true
+    create_before_destroy = false
   }
 }

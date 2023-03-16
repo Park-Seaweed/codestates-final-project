@@ -1,7 +1,7 @@
 resource "aws_secretsmanager_secret" "db_username" {
   name = "terraform/db_username"
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
 }
@@ -9,7 +9,7 @@ resource "aws_secretsmanager_secret" "db_username" {
 resource "aws_secretsmanager_secret" "db_password" {
   name = "terraform/db_password"
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
 }
@@ -17,7 +17,7 @@ resource "aws_secretsmanager_secret" "db_password" {
 resource "aws_secretsmanager_secret" "database" {
   name = "terraform/database"
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
 }
@@ -25,7 +25,7 @@ resource "aws_secretsmanager_secret" "database" {
 resource "aws_secretsmanager_secret" "hostname" {
   name = "terraform/writehostname"
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
 }
@@ -33,7 +33,7 @@ resource "aws_secretsmanager_secret" "hostname" {
 resource "aws_secretsmanager_secret" "read_hostname" {
   name = "terraform/readhostname"
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
 }
