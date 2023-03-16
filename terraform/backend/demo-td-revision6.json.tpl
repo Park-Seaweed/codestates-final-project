@@ -1,7 +1,7 @@
 [
     {
         "name": "final-test-api",
-        "image": "901512289056.dkr.ecr.ap-northeast-2.amazonaws.com/demo-project4:v5",
+        "image": "901512289056.dkr.ecr.ap-northeast-2.amazonaws.com/terraform-test:latest",
         "cpu": 0,
         "portMappings": [
             {
