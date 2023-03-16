@@ -70,9 +70,7 @@ resource "aws_ecs_service" "final_ecs_service" {
     container_name   = "final-test-api"
     container_port   = 3000
   }
-  deployment_controller {
-    type = "CODE_DEPLOY"
-  }
+
 
   depends_on = [
     aws_lb_listener.http_forward,

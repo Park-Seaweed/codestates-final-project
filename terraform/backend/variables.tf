@@ -21,3 +21,8 @@ variable "vpn_ami" {
   type        = string
 
 }
+
+variable "zone_id" {
+  description = "zone_id"
+  type        = string
+}
