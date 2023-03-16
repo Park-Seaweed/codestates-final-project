@@ -15,24 +15,7 @@ resource "aws_iam_role" "ssm_role" {
   })
 }
 
-resource "aws_iam_role_policy" "this" {
-  name = "EC2-Inline-Policy"
-  role = aws_iam_role.ssm_role.id
-  policy = jsonencode(
-    {
-      "Version" : "2012-10-17",
-      "Statement" : [
-        {
-          "Effect" : "Allow",
-          "Action" : [
-            "ssm:GetParameter"
-          ],
-          "Resource" : "*"
-        }
-      ]
-    }
-  )
-}
+
 
 
 resource "aws_iam_role_policy_attachment" "ssm_managed_policy_attachment" {
@@ -40,10 +23,7 @@ resource "aws_iam_role_policy_attachment" "ssm_managed_policy_attachment" {
   role       = aws_iam_role.ssm_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "ssm_cloudwatch" {
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-  role       = aws_iam_role.ssm_role.name
-}
+
 
 resource "aws_iam_instance_profile" "ssm_instance_profile" {
   name = "SSMInstanceProfile"
@@ -60,9 +40,7 @@ resource "aws_eip_association" "vpn_eip_assoc" {
 }
 
 
-# resource "aws_cloudwatch_log_group" "ssm_logs" {
-#   name = "/final/ssm"
-# }
+
 
 resource "aws_instance" "vpn_instance" {
   ami                         = var.vpn_ami

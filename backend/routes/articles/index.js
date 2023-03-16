@@ -19,12 +19,7 @@ const readerConnection = mysql.createPool({
 })
 
 
-
-
-
 module.exports = async function (fastify, opts) {
-
-
 
 
     fastify.post('/', async function (request, reply) {
@@ -35,7 +30,7 @@ module.exports = async function (fastify, opts) {
 
     fastify.get('/', async function (request, reply) {
         const [rows, fields] = await readerConnection.execute('SELECT * FROM posts');
-        const posts = rows.map(({ id, title, content }) => ({ id, title, content }));
+        const posts = rows.map(({ id, title, content, created_at, updated_at }) => ({ id, title, content, created_at, updated_at }));
         reply.code(200).send(posts);
     })
 
@@ -44,13 +39,13 @@ module.exports = async function (fastify, opts) {
         const [rows, fields] = await readerConnection.execute('SELECT * FROM posts WHERE id = ?', [id])
         if (rows.length > 0) {
             const { title, content } = rows[0]
-            reply.code(200).send({ id, title, content })
+            reply.code(200).send({ id, title, content, created_at, updated_at })
         } else {
             reply.code(404).send({ message: 'Post not found' })
         }
     })
 
-    fastify.put('/:id', async function (request, reply) {
+    fastify.patch('/:id', async function (request, reply) {
         const { id } = request.params;
         const { title, content } = request.body;
         const [rows, fields] = await writerConnection.execute('UPDATE posts SET title = ?, content = ? WHERE id = ?', [title, content, id]);
