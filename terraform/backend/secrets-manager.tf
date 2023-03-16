@@ -36,11 +36,11 @@ resource "aws_secretsmanager_secret_version" "database" {
 
 resource "aws_secretsmanager_secret_version" "hostname" {
   secret_id     = aws_secretsmanager_secret.hostname.id
-  secret_string = var.rds_cluster_write_endpoint
+  secret_string = aws_rds_cluster.aurora_cluster.endpoint
 }
 
 resource "aws_secretsmanager_secret_version" "read_hostname" {
   secret_id     = aws_secretsmanager_secret.read_hostname.id
-  secret_string = var.rds_cluster_read_endpoint
+  secret_string = aws_rds_cluster.aurora_cluster.reader_endpoint
 }
 
