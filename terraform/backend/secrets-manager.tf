@@ -11,7 +11,7 @@ resource "aws_secretsmanager_secret" "database" {
 }
 
 resource "aws_secretsmanager_secret" "hostname" {
-  name = "mysecret/hostname"
+  name = "mysecret/writehostname"
 }
 
 resource "aws_secretsmanager_secret" "read_hostname" {

@@ -19,7 +19,7 @@
         "volumesFrom": [],
         "secrets": [
             {
-                "name": "HOSTNAME",
+                "name": "WRITE_HOSTNAME",
                 "valueFrom": "${db_hostname}"
             },
             {
