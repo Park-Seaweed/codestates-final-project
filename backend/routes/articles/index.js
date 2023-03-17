@@ -1,21 +1,9 @@
 'use strict'
-
-const mysql = require('mysql2/promise');
+const { getUserId } = require("../../config/auth")
+const { readerConnection, writerConnection } = require("../../config/mysql")
 require('dotenv').config()
 
-const writerConnection = mysql.createPool({
-    host: process.env.WRITE_HOSTNAME,
-    user: process.env.USERNAME,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE
-});
 
-const readerConnection = mysql.createPool({
-    host: process.env.READ_HOSTNAME,
-    user: process.env.USERNAME,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE
-})
 
 
 module.exports = async function (fastify, opts) {
@@ -28,8 +16,13 @@ module.exports = async function (fastify, opts) {
 
 
     fastify.post('/', async function (request, reply) {
+        const userId = await getUserId(request)
+        if (!userId) {
+            reply.code(401).send({ message: "Unauthorized" })
+            return
+        }
         const { title, content } = request.body;
-        const [rows, fields] = await writerConnection.execute('INSERT INTO posts (title, content) VALUES (?, ?)', [title, content]);
+        const [rows, fields] = await writerConnection.execute('INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)', [title, content, userId]);
         reply.code(201).send({ id: rows.insertId, title, content });
     })
 
@@ -51,9 +44,15 @@ module.exports = async function (fastify, opts) {
     })
 
     fastify.patch('/:id', async function (request, reply) {
+        const userId = await getUserId(request);
+        if (!userId) {
+            reply.code(401).send({ message: 'Unauthorized' });
+            return;
+        }
+
         const { id } = request.params;
         const { title, content } = request.body;
-        const [rows, fields] = await writerConnection.execute('UPDATE posts SET title = ?, content = ? WHERE id = ?', [title, content, id]);
+        const [rows, fields] = await writerConnection.execute('UPDATE posts SET title = ?, content = ? WHERE id = ? AND user_id = ?', [title, content, id, userId]);
         if (rows.affectedRows === 0) {
             reply.code(404).send({ message: 'Post not found' });
         } else {
@@ -62,8 +61,14 @@ module.exports = async function (fastify, opts) {
     });
 
     fastify.delete('/:id', async function (request, reply) {
+        const userId = await getUserId(request);
+        if (!userId) {
+            reply.code(401).send({ message: 'Unauthorized' });
+            return;
+        }
+
         const { id } = request.params;
-        const [rows, fields] = await writerConnection.execute('DELETE FROM posts WHERE id = ?', [id]);
+        const [rows, fields] = await writerConnection.execute('DELETE FROM posts WHERE id = ? AND user_id = ?', [id, userId]);
         if (rows.affectedRows === 0) {
             reply.code(404).send({ message: 'Post not found' });
         } else {

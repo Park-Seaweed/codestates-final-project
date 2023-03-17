@@ -1,9 +1,11 @@
 const { cognitoIdentityServiceProvider } = require("../../config/auth")
+require('dotenv').config()
+
 module.exports = async function (fastify, opts) {
     fastify.post('/signup', async function (request, reply) {
         const { email, password } = request.body
         const params = {
-            ClientId: "411dlu4ni2fr31igv4dm0am5id",
+            ClientId: process.env.CLIENT_ID,
             Username: email,
             Password: password,
             UserAttributes: [
@@ -24,12 +26,34 @@ module.exports = async function (fastify, opts) {
 
     })
 
+    fastify.post('/login', async function (request, reply) {
+        const { email, password } = request.body
+        const params = {
+            AuthFlow: "USER_PASSWORD_AUTH",
+            ClientId: process.env.CLIENT_ID,
+            AuthParameters: {
+                USERNAME: email,
+                PASSWORD: password
+            }
+        }
+        try {
+            const data = await cognitoIdentityServiceProvider.initiateAuth(params).promise()
+            const accessToken = data.AuthenticationResult.AccessToken
+            reply.code(200).send({ message: "User logged in successfuly", accessToken })
+        } catch (error) {
+            console.error("Failed to log in user:", error)
+            reply.code(400).send({ message: "Failed to log in user", error })
+        }
+    })
+
+
+
     fastify.post('/verify', async function (request, reply) {
         const { email, verificationCode } = request.body;
 
         try {
             const params = {
-                ClientId: "411dlu4ni2fr31igv4dm0am5id",
+                ClientId: process.env.CLIENT_ID,
                 ConfirmationCode: verificationCode,
                 Username: email,
             };
@@ -44,7 +68,5 @@ module.exports = async function (fastify, opts) {
     });
 
 
-    // fastify.post('/login', async function (request, reply){
-    //     cons
-    // })
+
 }
