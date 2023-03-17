@@ -87,28 +87,24 @@ resource "aws_instance" "vpn_instance" {
                #!/bin/bash
               sudo yum install -y amazon-ssm-agent
 
-              # Create log group and log stream
-              LOG_GROUP_NAME="/aws/ssm/vpn-instance"
-              LOG_STREAM_NAME="session-logs"
+              
               REGION=$(curl --silent http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/[a-z]$//')
               INSTANCE_ID=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
-              aws logs create-log-group --log-group-name $LOG_GROUP_NAME --region $REGION
-              aws logs create-log-stream --log-group-name $LOG_GROUP_NAME --log-stream-name $LOG_STREAM_NAME --region $REGION
-
-              # Update SSM agent configuration file
+              LOG_GROUP_NAME="${aws_cloudwatch_log_group.ssm_log_group.name}"
+              LOG_STREAM_NAME="${aws_cloudwatch_log_stream.ssm_log_stream.name}"
               sudo tee /etc/amazon/ssm/amazon-ssm-agent.json <<-'AGENT_JSON'
               {
                 "Mds": {
-                  "LogGroupName": "${aws_cloudwatch_log_group.ssm_log_group.name}",
-                  "LogStreamName": "${aws_cloudwatch_log_stream.ssm_log_stream.name}",
-                  "Region": "${REGION}"
+                  "LogGroupName": "$LOG_GROUP_NAME",
+                  "LogStreamName": "$LOG_STREAM_NAME",
+                  "Region": "$REGION"
                 },
                 "Os": {
                   "Lang": "en-US"
                 },
                 "Ssm": {
                   "S3": {
-                    "Region": "${REGION}"
+                    "Region": "$REGION"
                   }
                 }
               }
