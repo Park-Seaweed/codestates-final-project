@@ -89,7 +89,6 @@ resource "aws_ssm_document" "session_manager_prefs" {
       "s3EncryptionEnabled"         = false
       "cloudWatchLogStreamName"     = aws_cloudwatch_log_stream.session_log_stream.name
       "s3EncryptionKmsKeyId"        = ""
-      "targetInstances"             = "*"
     }
   })
 }
