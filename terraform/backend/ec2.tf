@@ -61,3 +61,44 @@ resource "aws_instance" "vpn_instance" {
     Name = "final-vpn-1"
   }
 }
+
+resource "aws_cloudwatch_log_group" "session_log_group" {
+  name = "/aws/ssm/final-test"
+}
+
+
+resource "aws_cloudwatch_log_stream" "session_log_stream" {
+  name           = "session-log-stream"
+  log_group_name = aws_cloudwatch_log_group.session_log_group.name
+}
+
+resource "aws_ssm_document" "session_manager_prefs" {
+  name          = "SessionManagerPrefs"
+  document_type = "Session"
+
+  content = jsonencode({
+    "schemaVersion" = "1.0"
+    "description"   = "Session Manager preferences"
+    "sessionType"   = "Standard_Stream"
+    "inputs" = {
+      "s3BucketName"                = ""
+      "s3KeyPrefix"                 = ""
+      "cloudWatchLogGroupName"      = aws_cloudwatch_log_group.session_log_group.name
+      "cloudWatchEncryptionEnabled" = false
+      "kmsKeyId"                    = ""
+      "s3EncryptionEnabled"         = false
+      "cloudWatchLogStreamName"     = aws_cloudwatch_log_stream.session_log_stream.name
+      "s3EncryptionKmsKeyId"        = ""
+      "targetInstances"             = "*"
+    }
+  })
+}
+
+resource "aws_ssm_association" "session_manager_prefs_association" {
+  name = aws_ssm_document.session_manager_prefs.name
+
+  targets {
+    key    = "instanceids"
+    values = [aws_instance.vpn_instance.id]
+  }
+}
