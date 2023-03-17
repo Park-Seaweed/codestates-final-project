@@ -20,7 +20,7 @@
         "secrets": [
             {
                 "name": "WRITE_HOSTNAME",
-                "valueFrom": "${db_hostname}"
+                "valueFrom": "${db_write_hostname}"
             },
             {
                 "name": "PASSWORD",
