@@ -15,9 +15,6 @@ resource "aws_iam_role" "ssm_role" {
   })
 }
 
-
-
-
 resource "aws_iam_role_policy_attachment" "ssm_managed_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   role       = aws_iam_role.ssm_role.name
@@ -66,38 +63,23 @@ resource "aws_cloudwatch_log_group" "session_log_group" {
   name = "/aws/ssm/final-test"
 }
 
-
-resource "aws_cloudwatch_log_stream" "session_log_stream" {
-  name           = "session-log-stream"
-  log_group_name = aws_cloudwatch_log_group.session_log_group.name
-}
-
-resource "aws_ssm_document" "session_manager_prefs" {
-  name          = "SessionManagerPrefs"
-  document_type = "Session"
-
-  content = jsonencode({
-    "schemaVersion" = "1.0"
-    "description"   = "Session Manager preferences"
-    "sessionType"   = "Standard_Stream"
-    "inputs" = {
-      "s3BucketName"                = ""
-      "s3KeyPrefix"                 = ""
-      "cloudWatchLogGroupName"      = aws_cloudwatch_log_group.session_log_group.name
-      "cloudWatchEncryptionEnabled" = false
-      "kmsKeyId"                    = ""
-      "s3EncryptionEnabled"         = false
-      "cloudWatchLogStreamName"     = aws_cloudwatch_log_stream.session_log_stream.name
-      "s3EncryptionKmsKeyId"        = ""
-    }
-  })
-}
-
-resource "aws_ssm_association" "session_manager_prefs_association" {
-  name = aws_ssm_document.session_manager_prefs.name
-
+resource "aws_ssm_maintenance_window_task" "ssesion_manager_task" {
+  task_type       = "RUN_COMMAND"
+  max_concurrency = "50"
+  max_errors      = "0"
   targets {
-    key    = "instanceids"
-    values = [aws_instance.vpn_instance.id]
+    key   = "InstanceIds"
+    value = [aws_instance.vpn_instance.id]
+  }
+
+  task_invocation_parameters {
+    run_command_parameters {
+      document_name = "AWS-StartSession"
+      comment       = "Start session"
+      parameters = {
+        "CloudWatchLogGroupName"      = "${aws_cloudwatch_log_group.session_log_group.name}"
+        "CloudWatchEncryptionEnabled" = "false"
+      }
+    }
   }
 }
