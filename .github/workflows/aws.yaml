@@ -7,10 +7,10 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  ECS_CLUSTER: DevCluster
-  ECS_SERVICE: demo-svc
+  ECS_CLUSTER: final-test-ecs-cluster
+  ECS_SERVICE: final-ecs-service
   ECS_TASK_DEFINITION: .aws/task-definition.json
-  CONTAINER_NAME: demo-api
+  CONTAINER_NAME: final-test-api
 
 permissions:
   contents: read
@@ -46,7 +46,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: demo-project4
+          ECR_REPOSITORY: terraform-test
           IMAGE_TAG: ${{ steps.extract_tag_name.outputs.version }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG backend/
