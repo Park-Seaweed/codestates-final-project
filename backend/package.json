@@ -27,6 +27,7 @@
     "@fastify/cors": "^8.2.0",
     "@fastify/mysql": "^4.1.0",
     "@fastify/sensible": "^5.0.0",
+    "aws-sdk": "^2.1337.0",
     "bcrypt": "^5.1.0",
     "fastify": "^4.0.0",
     "fastify-cli": "^5.7.1",
