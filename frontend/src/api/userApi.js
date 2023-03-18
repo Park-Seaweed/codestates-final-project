@@ -11,4 +11,7 @@ export const userApi = {
   signOut: (config) => {
     return userApiInstance.post('/auth/logout', {}, config);
   },
+  signUp: (data) => {
+    return userApiInstance.post('/auth/signup', data);
+  },
 };
