@@ -7,17 +7,18 @@ const cognitoIdentityServiceProvider = new AWS.CognitoIdentityServiceProvider({
 
 
 async function getUserId(request) {
-    const accessToken = request.headers.authorization
+    const accessToken = request.headers.authorization;
+
     const params = {
         AccessToken: accessToken
-    }
+    };
 
     try {
-        const response = await cognitoIdentityServiceProvider.getUser(params).promise()
-        return response.Username
+        const data = await cognitoIdentityServiceProvider.getUser(params).promise();
+        const userNickname = data.UserAttributes.find(attr => attr.Name === 'nickname').Value;
+        return userNickname;
     } catch (error) {
-        console.error('Failed to get user from Cognito:', error)
-        return null
+        return null;
     }
 }
 

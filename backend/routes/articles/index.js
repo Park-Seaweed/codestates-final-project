@@ -16,19 +16,25 @@ module.exports = async function (fastify, opts) {
 
 
     fastify.post('/', async function (request, reply) {
-        const userId = await getUserId(request)
-        if (!userId) {
+        const userNickname = await getUserId(request)
+        if (!userNickname) {
             reply.code(401).send({ message: "Unauthorized" })
             return
         }
         const { title, content } = request.body;
-        const [rows, fields] = await writerConnection.execute('INSERT INTO posts (title, content, user_id) VALUES (?, ?, ?)', [title, content, userId]);
+        const [rows, fields] = await writerConnection.execute('INSERT INTO posts (title, content, user_nickname) VALUES (?, ?, ?)', [title, content, userNickname]);
         reply.code(201).send({ id: rows.insertId, title, content });
     })
 
+
     fastify.get('/', async function (request, reply) {
         const [rows, fields] = await readerConnection.execute('SELECT * FROM posts');
-        const posts = rows.map(({ id, title, content, created_at, updated_at }) => ({ id, title, content, created_at, updated_at }));
+
+        const posts = rows.map(({ id, title, content, user_nickname, created_at, updated_at }) => {
+            const formattedCreatedAt = new Date(created_at).toLocaleString();
+            const formattedUpdatedAt = new Date(updated_at).toLocaleString();
+            return { id, title, content, user_nickname, created_at: formattedCreatedAt, updated_at: formattedUpdatedAt };
+        });
         reply.code(200).send(posts);
     })
 
@@ -36,23 +42,25 @@ module.exports = async function (fastify, opts) {
         const { id } = request.params
         const [rows, fields] = await readerConnection.execute('SELECT * FROM posts WHERE id = ?', [id])
         if (rows.length > 0) {
-            const { title, content } = rows[0]
-            reply.code(200).send({ id, title, content, created_at, updated_at })
+            const { title, content, user_nickname, created_at, updated_at } = rows[0];
+            const formattedCreatedAt = new Date(created_at).toLocaleString();
+            const formattedUpdatedAt = new Date(updated_at).toLocaleString();
+            reply.code(200).send({ id, title, content, user_nickname, created_at: formattedCreatedAt, updated_at: formattedUpdatedAt });
         } else {
             reply.code(404).send({ message: 'Post not found' })
         }
     })
 
     fastify.patch('/:id', async function (request, reply) {
-        const userId = await getUserId(request);
-        if (!userId) {
+        const userNickname = await getUserId(request);
+        if (!userNickname) {
             reply.code(401).send({ message: 'Unauthorized' });
             return;
         }
 
         const { id } = request.params;
         const { title, content } = request.body;
-        const [rows, fields] = await writerConnection.execute('UPDATE posts SET title = ?, content = ? WHERE id = ? AND user_id = ?', [title, content, id, userId]);
+        const [rows, fields] = await writerConnection.execute('UPDATE posts SET title = ?, content = ? WHERE id = ? AND user_nickname = ?', [title, content, id, userNickname]);
         if (rows.affectedRows === 0) {
             reply.code(404).send({ message: 'Post not found' });
         } else {
@@ -61,14 +69,14 @@ module.exports = async function (fastify, opts) {
     });
 
     fastify.delete('/:id', async function (request, reply) {
-        const userId = await getUserId(request);
-        if (!userId) {
+        const userNickname = await getUserId(request);
+        if (!userNickname) {
             reply.code(401).send({ message: 'Unauthorized' });
             return;
         }
 
         const { id } = request.params;
-        const [rows, fields] = await writerConnection.execute('DELETE FROM posts WHERE id = ? AND user_id = ?', [id, userId]);
+        const [rows, fields] = await writerConnection.execute('DELETE FROM posts WHERE id = ? AND user_nickname = ?', [id, userNickname]);
         if (rows.affectedRows === 0) {
             reply.code(404).send({ message: 'Post not found' });
         } else {

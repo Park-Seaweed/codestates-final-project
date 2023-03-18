@@ -3,7 +3,7 @@ require('dotenv').config()
 
 module.exports = async function (fastify, opts) {
     fastify.post('/signup', async function (request, reply) {
-        const { email, password } = request.body
+        const { email, password, nickname } = request.body
         const params = {
             ClientId: process.env.CLIENT_ID,
             Username: email,
@@ -12,6 +12,10 @@ module.exports = async function (fastify, opts) {
                 {
                     Name: "email",
                     Value: email
+                },
+                {
+                    Name: "nickname",
+                    Value: nickname
                 }
             ]
         }
@@ -64,6 +68,22 @@ module.exports = async function (fastify, opts) {
         } catch (error) {
             console.error('Failed to verify user', error);
             reply.code(500).send({ message: 'Failed to verify user', error });
+        }
+    });
+
+
+    fastify.post('/logout', async function (request, reply) {
+        const accessToken = request.headers.authorization;
+        const params = {
+            AccessToken: accessToken,
+        };
+
+        try {
+            await cognitoIdentityServiceProvider.globalSignOut(params).promise();
+            reply.code(200).send({ message: 'User logged out successfully' });
+        } catch (error) {
+            console.error('Failed to log out user:', error);
+            reply.code(400).send({ message: 'Failed to log out user', error });
         }
     });
 
