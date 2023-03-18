@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { articleApi } from '../api/articleApi';
 import Pagination from '../components/Pagination';
+import Header from '../components/Header';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const MainPage = () => {
   };
   return (
     <div>
+      <Header />
       <MainTable data={currentPosts} />
       <Bottom>
         <Pagination

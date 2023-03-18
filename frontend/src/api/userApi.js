@@ -8,4 +8,7 @@ export const userApi = {
   signIn: (data) => {
     return userApiInstance.post('/auth/login', data);
   },
+  signOut: (config) => {
+    return userApiInstance.post('/auth/logout', {}, config);
+  },
 };
