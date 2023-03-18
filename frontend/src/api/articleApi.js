@@ -24,4 +24,11 @@ export const articleApi = {
   deleteArticles: (data) => {
     return articleApiInstance.delete(`/articles/${data}`);
   },
+
+  updateArticles: (data) => {
+    return articleApiInstance.patch(`/articles/${data.id}`, {
+      title: data.title,
+      content: data.content,
+    });
+  },
 };
