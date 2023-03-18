@@ -1,6 +1,7 @@
 'use strict'
 const { getUserId } = require("../../config/auth")
 const { readerConnection, writerConnection } = require("../../config/mysql")
+const { testConnection } = require("../../config/mysql")
 require('dotenv').config()
 
 
@@ -29,6 +30,10 @@ module.exports = async function (fastify, opts) {
 
     fastify.get('/', async function (request, reply) {
         const [rows, fields] = await readerConnection.execute('SELECT * FROM posts');
+        if (rows.length === 0) {
+            reply.code(200).send([]);
+            return;
+        }
 
         const posts = rows.map(({ id, title, content, user_nickname, created_at, updated_at }) => {
             const formattedCreatedAt = new Date(created_at).toLocaleString();
