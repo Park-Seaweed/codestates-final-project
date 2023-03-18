@@ -4,27 +4,24 @@ import { useNavigate } from 'react-router-dom';
 
 import { userApi } from '../api/userApi';
 
-const SignUpPage = () => {
+const VerifyPage = () => {
   const navigate = useNavigate();
-  const [signUp, setSignUp] = useState({
-    email: '',
-    nickname: '',
-    password: '',
-  });
+  const [verify, setVerify] = useState({ email: '', verificationCode: '' });
 
   const handleChange = (e) => {
     const { value, id } = e.target;
-    setSignUp({
-      ...signUp,
+    setVerify({
+      ...verify,
       [id]: value,
     });
   };
 
-  const handleSignUp = async () => {
+  const handleVerify = async () => {
     try {
-      const response = await userApi.signUp(signUp);
-      console.log(response);
-      navigate(`/signup/verify`);
+      const res = await userApi.verify(verify);
+      console.log(res);
+      alert('인증 완료');
+      navigate(`/signin`);
     } catch (error) {
       console.error(error);
     }
@@ -42,26 +39,20 @@ const SignUpPage = () => {
           />
           <input
             type='text'
-            id='nickname'
+            id='verificationCode'
             onChange={handleChange}
-            placeholder='닉네임을 입력해주세요.'
-          />
-          <input
-            type='password'
-            id='password'
-            onChange={handleChange}
-            placeholder='비밀번호를 입력해주세요.'
+            placeholder='인증코드를 입력해주세요.'
           />
         </InputBox>
         <StButtonBox>
-          <SignInButton onClick={handleSignUp}>SIGN UP</SignInButton>
+          <SignInButton onClick={handleVerify}>인증</SignInButton>
         </StButtonBox>
       </SignInBox>
     </SignInContainer>
   );
 };
 
-export default SignUpPage;
+export default VerifyPage;
 
 const SignInContainer = styled.div`
   width: 100%;
@@ -87,7 +78,7 @@ const SignInBox = styled.div`
 
 const InputBox = styled.div`
   width: 70%;
-  height: 110px;
+  height: 55px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -100,12 +91,9 @@ const InputBox = styled.div`
 
   &:before {
     content: '';
-    height: 33%;
     position: absolute;
     border-top: 1px solid #ffbc3f;
-    border-bottom: 1px solid #ffbc3f;
-
-    top: 33%;
+    top: 50%;
     left: 0;
     right: 0;
   }
@@ -116,7 +104,6 @@ const InputBox = styled.div`
     outline: none;
     border: none;
     padding: 0 10px;
-    z-index: 1;
   }
 `;
 

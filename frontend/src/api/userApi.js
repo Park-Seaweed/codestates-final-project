@@ -14,4 +14,7 @@ export const userApi = {
   signUp: (data) => {
     return userApiInstance.post('/auth/signup', data);
   },
+  verify: (data) => {
+    return userApiInstance.post('/auth/verify', data);
+  },
 };
