@@ -1,15 +1,27 @@
 import axios from 'axios';
 
+const articleApiInstance = axios.create({
+  baseURL: process.env.REACT_APP_BACK_END_URL,
+});
+
+articleApiInstance.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+    config.headers['authorization'] = `${accessToken}`;
+  }
+  return config;
+});
+
 export const articleApi = {
   getArticles: () => {
-    return axios.get(`${process.env.REACT_APP_BACK_END_URL}/articles`);
+    return articleApiInstance.get(`/articles`);
   },
+
   addArticles: (data) => {
-    return axios.post(`${process.env.REACT_APP_BACK_END_URL}/articles`, data);
+    return articleApiInstance.post(`/articles`, data);
   },
+
   deleteArticles: (data) => {
-    return axios.delete(
-      `${process.env.REACT_APP_BACK_END_URL}/articles/${data}`
-    );
+    return articleApiInstance.delete(`/articles/${data}`);
   },
 };
