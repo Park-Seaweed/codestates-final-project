@@ -1,11 +1,13 @@
 const { cognitoIdentityServiceProvider } = require("../../config/auth")
 require('dotenv').config()
 
+
+const clientid = "3dvitblfiuv0d2qn9m5jkgo6cs"
 module.exports = async function (fastify, opts) {
     fastify.post('/signup', async function (request, reply) {
         const { email, password, nickname } = request.body
         const params = {
-            ClientId: process.env.CLIENT_ID,
+            ClientId: clientid,
             Username: email,
             Password: password,
             UserAttributes: [
@@ -34,7 +36,7 @@ module.exports = async function (fastify, opts) {
         const { email, password } = request.body
         const params = {
             AuthFlow: "USER_PASSWORD_AUTH",
-            ClientId: process.env.CLIENT_ID,
+            ClientId: clientid,
             AuthParameters: {
                 USERNAME: email,
                 PASSWORD: password
@@ -57,7 +59,7 @@ module.exports = async function (fastify, opts) {
 
         try {
             const params = {
-                ClientId: process.env.CLIENT_ID,
+                ClientId: clientid,
                 ConfirmationCode: verificationCode,
                 Username: email,
             };
