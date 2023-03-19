@@ -24,7 +24,7 @@ const SignUpPage = () => {
     try {
       const response = await userApi.signUp(signUp);
       console.log(response);
-      navigate(`/signup/verify`);
+      navigate(`/verify`);
     } catch (error) {
       console.error(error);
     }

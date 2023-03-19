@@ -24,7 +24,7 @@ module.exports = async function (fastify, opts) {
             reply.code(200).send({ message: "User signde up successfully", data })
         } catch (error) {
             console.error('Failed to sign up user:', error)
-            reply.code(200).send({ message: "Failed to sign up user", error })
+            reply.code(400).send({ message: "Failed to sign up user", error })
         }
 
 

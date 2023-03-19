@@ -1,7 +1,7 @@
 'use strict'
 const { getUserId } = require("../../config/auth")
 const { readerConnection, writerConnection } = require("../../config/mysql")
-const { testConnection } = require("../../config/mysql")
+
 require('dotenv').config()
 
 

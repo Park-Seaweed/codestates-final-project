@@ -3,6 +3,7 @@ const AWS = require("aws-sdk")
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
+
 AWS.config.update({
     accessKeyId,
     secretAccessKey
