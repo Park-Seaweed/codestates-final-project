@@ -20,23 +20,23 @@
         "secrets": [
             {
                 "name": "WRITE_HOSTNAME",
-                "valueFrom": ${db_write_hostname}
+                "valueFrom": "${db_write_hostname}"
             },
             {
                 "name": "PASSWORD",
-                "valueFrom": ${db_password}
+                "valueFrom": "${db_password}"
             },
             {
                 "name": "DATABASE",
-                "valueFrom": ${database}
+                "valueFrom": "${database}"
             },
             {
                 "name": "READ_HOSTNAME",
-                "valueFrom": ${db_reader_hostname}
+                "valueFrom": "${db_reader_hostname}"
             },
             {
                 "name": "USERNAME",
-                "valueFrom": ${db_name}
+                "valueFrom": "${db_name}"
             },
             {
                 "name": "AWS_ACCESS_KEY_ID",
