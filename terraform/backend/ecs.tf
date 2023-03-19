@@ -86,7 +86,6 @@ data "template_file" "service" {
     db_password           = data.aws_secretsmanager_secret.rds_password.arn
     db_name               = data.aws_secretsmanager_secret.rds_username.arn
     database              = data.aws_secretsmanager_secret.rds_database.arn
-    client_id             = data.aws_secretsmanager_secret.client_id.arn
     aws_access_key_id     = data.aws_secretsmanager_secret.aws_access_key_id.arn
     aws_secret_access_key = data.aws_secretsmanager_secret.aws_secret_access_key.arn
 

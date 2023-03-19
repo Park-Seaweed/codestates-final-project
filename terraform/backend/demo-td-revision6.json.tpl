@@ -1,7 +1,7 @@
 [
     {
         "name": "final-test-api",
-        "image": "901512289056.dkr.ecr.ap-northeast-2.amazonaws.com/terraform-test:v0.0.2",
+        "image": "901512289056.dkr.ecr.ap-northeast-2.amazonaws.com/terraform-test:v0.0.3",
         "cpu": 0,
         "portMappings": [
             {
@@ -37,10 +37,6 @@
             {
                 "name": "USERNAME",
                 "valueFrom": "${db_name}"
-            },
-            {
-                "name": "CLIENT_ID",
-                "valueFrom": "${client_id}"
             },
             {
                 "name": "AWS_ACCESS_KEY_ID",
