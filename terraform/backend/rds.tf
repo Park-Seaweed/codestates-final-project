@@ -23,13 +23,11 @@ resource "aws_rds_cluster_instance" "aurora_instance" {
   identifier          = "final-aurora-cluster-${count.index}"
   cluster_identifier  = aws_rds_cluster.aurora_cluster.id
   instance_class      = "db.t3.small"
+  engine              = aws_rds_cluster.aurora_cluster.engine
+  engine_version      = aws_rds_cluster.aurora_cluster.engine_version
   publicly_accessible = false
-  engine              = "aurora-mysql"
-  engine_version      = "5.7.mysql_aurora.2.11.1"
-  monitoring_interval = "60"
+  monitoring_interval = 60
   monitoring_role_arn = aws_iam_role.enhanced_monitoring.arn
-
-  performance_insights_enabled = true
 
 }
 
@@ -39,7 +37,7 @@ resource "aws_db_subnet_group" "aurora_subnet_group" {
 }
 
 resource "aws_iam_role" "enhanced_monitoring" {
-  name = "rds-enhanced-monitoring"
+  name = "enhanced-monitoring-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -55,7 +53,7 @@ resource "aws_iam_role" "enhanced_monitoring" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "enhanced_monitoring" {
+resource "aws_iam_role_policy_attachment" "rds_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
   role       = aws_iam_role.enhanced_monitoring.name
 }
