@@ -9,6 +9,7 @@ resource "aws_lb" "final_ecs_alb" {
   }
 }
 
+
 resource "aws_lb_target_group" "ecs_alb_tg" {
   name        = "ecs-alb-tg"
   port        = 3000

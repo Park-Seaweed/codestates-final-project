@@ -92,7 +92,7 @@ resource "aws_instance" "vpn_instance" {
               INSTANCE_ID=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
               LOG_GROUP_NAME="${aws_cloudwatch_log_group.ssm_log_group.name}"
               LOG_STREAM_NAME="${aws_cloudwatch_log_stream.ssm_log_stream.name}"
-              sudo tee /etc/amazon/ssm/amazon-ssm-agent.json <<-'AGENT_JSON'
+              sudo tee /etc/amazon/ssm/amazon-ssm-agent.json <<-AGENT_JSON
               {
                 "Mds": {
                   "LogGroupName": "$LOG_GROUP_NAME",

@@ -17,3 +17,15 @@ data "aws_secretsmanager_secret" "rds_password" {
 data "aws_secretsmanager_secret" "rds_database" {
   name = "final-terraform/database"
 }
+
+data "aws_secretsmanager_secret" "client_id" {
+  name = "final-terraform/clientid"
+}
+
+data "aws_secretsmanager_secret" "aws_access_key_id" {
+  name = "final-terraform/aws-access-key-id"
+}
+
+data "aws_secretsmanager_secret" "aws_secret_access_key" {
+  name = "final-terraform/aws-secret-access-key"
+}

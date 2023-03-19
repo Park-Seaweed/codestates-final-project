@@ -81,11 +81,14 @@ resource "aws_ecs_service" "final_ecs_service" {
 data "template_file" "service" {
   template = file("./demo-td-revision6.json.tpl")
   vars = {
-    db_write_hostname  = data.aws_secretsmanager_secret.rds_write_hostname.arn
-    db_reader_hostname = data.aws_secretsmanager_secret.rds_read_hostname.arn
-    db_password        = data.aws_secretsmanager_secret.rds_password.arn
-    db_name            = data.aws_secretsmanager_secret.rds_username.arn
-    database           = data.aws_secretsmanager_secret.rds_database.arn
+    db_write_hostname     = data.aws_secretsmanager_secret.rds_write_hostname.arn
+    db_reader_hostname    = data.aws_secretsmanager_secret.rds_read_hostname.arn
+    db_password           = data.aws_secretsmanager_secret.rds_password.arn
+    db_name               = data.aws_secretsmanager_secret.rds_username.arn
+    database              = data.aws_secretsmanager_secret.rds_database.arn
+    client_id             = data.aws_secretsmanager_secret.client_id.arn
+    aws_access_key_id     = data.aws_secretsmanager_secret.aws_access_key_id.arn
+    aws_secret_access_key = data.aws_secretsmanager_secret.aws_secret_access_key.arn
 
 
 
