@@ -1,21 +1,21 @@
 data "aws_secretsmanager_secret" "rds_read_hostname" {
-  name = "final-terraform/readhostname"
+  name = "final-terraform/readendpoint"
 }
 
 data "aws_secretsmanager_secret" "rds_write_hostname" {
-  name = "final-terraform/writehostname"
+  name = "final-terraform/write-endpoint"
 }
 
 data "aws_secretsmanager_secret" "rds_username" {
-  name = "final-terraform/username"
+  name = "final-terraform/db-username"
 }
 
 data "aws_secretsmanager_secret" "rds_password" {
-  name = "final-terraform/password"
+  name = "final-terraform/db-password"
 }
 
 data "aws_secretsmanager_secret" "rds_database" {
-  name = "final-terraform/database"
+  name = "final-terraform/db-database"
 }
 
 
