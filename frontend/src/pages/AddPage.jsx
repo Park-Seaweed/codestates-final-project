@@ -5,18 +5,24 @@ import styled from 'styled-components'
 import { articleApi } from "../api/articleApi";
 
 const AddPage = () => {
-    const [title, setTitle] = useState("")
-    const [content, setContent] = useState("")
     const navigate = useNavigate()
     const queryClient = useQueryClient()
+
+    const [title, setTitle] = useState("")
+    const [content, setContent] = useState("")
+    
+
+    // POST
     const addArticleMutation = useMutation(articleApi.addArticles, {
         onSuccess: (responseData) => {
             queryClient.invalidateQueries("article_list")
+            // 초기화
             setTitle("")
-            setContent("")
+            setContent("") 
             navigate(`/`)
         }
     })
+
     const onClickAddHandler = () => {
         if (title === "" || content === "") {
             return
@@ -25,6 +31,7 @@ const AddPage = () => {
             title,
             content
         }
+        // 게시글 등록
         addArticleMutation.mutate(data)
 
     }

@@ -11,10 +11,10 @@ import VerifyPage from '../pages/VerifyPage';
 const Router = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  // 토큰이 없으면 signin 페이지로 보내기 signup패이지와 verify페이지는 제외
   useEffect(() => {
     const isLoginRequired =
-      !localStorage.getItem('accessToken') &&
+      !sessionStorage.getItem('accessToken') &&
       !location.pathname.startsWith('/signup') &&
       !location.pathname.startsWith('/verify');
 

@@ -23,11 +23,11 @@ const DetailPage = () => {
   const handleMainClick = () => {
     navigate(`/`);
   };
-
+  // 게시글 상세 조회
   const oneArticle = Articles?.data?.data?.find(
     (a) => a.id === parseInt(param.id)
   );
-
+    // DELETE
   const deleteArticleMutation = useMutation(articleApi.deleteArticles, {
     onSuccess: () => {
       queryClient.invalidateQueries('article_list');
@@ -37,7 +37,7 @@ const DetailPage = () => {
       alert('본인이 쓴 게시글만 삭제할 수 있습니다.');
     },
   });
-
+  // UPDATE
   const editArticleMutation = useMutation(articleApi.updateArticles, {
     onSuccess: () => {
       queryClient.invalidateQueries('article_list');
@@ -45,7 +45,7 @@ const DetailPage = () => {
       navigate(`/`);
     },
   });
-
+  // 게시글 수정
   const handleClick = (e) => {
     e.preventDefault();
     editArticleMutation.mutate({

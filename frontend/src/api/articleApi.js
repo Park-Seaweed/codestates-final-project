@@ -4,8 +4,10 @@ const articleApiInstance = axios.create({
   baseURL: process.env.REACT_APP_BACK_END_URL,
 });
 
+
+// 인터셉터
 articleApiInstance.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = sessionStorage.getItem('accessToken');
   if (accessToken) {
     config.headers['authorization'] = `${accessToken}`;
   }

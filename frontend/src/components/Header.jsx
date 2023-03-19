@@ -11,13 +11,13 @@ const Header = () => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('accessToken'),
+        Authorization: sessionStorage.getItem('accessToken'),
       },
     };
 
     try {
       const res = await userApi.signOut(config);
-      localStorage.removeItem('accessToken');
+      sessionStorage.removeItem('accessToken');
       console.log(res);
       navigate(`/signin`);
     } catch (error) {

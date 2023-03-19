@@ -9,13 +9,14 @@ import Header from '../components/Header';
 
 const MainPage = () => {
   const navigate = useNavigate();
-
+  // GET
   const Articles = useQuery('article_list', articleApi.getArticles, {
     onSuccess: (data) => {
       console.log(data.data);
     },
   });
-
+  
+  // 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
 

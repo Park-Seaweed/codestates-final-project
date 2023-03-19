@@ -22,7 +22,7 @@ const SignInPage = () => {
     try {
       const res = await userApi.signIn(signIn);
       console.log(res);
-      localStorage.setItem('accessToken', res.data.accessToken);
+      sessionStorage.setItem('accessToken', res.data.accessToken);
       navigate(`/`);
     } catch (error) {
       console.error(error);
