@@ -25,13 +25,11 @@ resource "aws_rds_cluster_instance" "aurora_instance" {
   instance_class      = "db.t3.small"
   publicly_accessible = false
   engine              = "aurora-mysql"
-
+  engine_version      = "5.7.mysql_aurora.2.11.1"
   monitoring_interval = "60"
   monitoring_role_arn = aws_iam_role.enhanced_monitoring.arn
 
-  performance_insights_enabled          = true
-  performance_insights_retention_period = 7
-  performance_insights_kms_key_id       = aws_kms_key.performance_insights_key.arn
+  performance_insights_enabled = true
 
 }
 
@@ -60,8 +58,4 @@ resource "aws_iam_role" "enhanced_monitoring" {
 resource "aws_iam_role_policy_attachment" "enhanced_monitoring" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
   role       = aws_iam_role.enhanced_monitoring.name
-}
-
-resource "aws_kms_key" "performance_insights_key" {
-  description = "Performance insights key for RDS"
 }
