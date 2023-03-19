@@ -24,6 +24,7 @@ resource "aws_rds_cluster_instance" "aurora_instance" {
   cluster_identifier  = aws_rds_cluster.aurora_cluster.id
   instance_class      = "db.t3.small"
   publicly_accessible = false
+  engine              = "aurora-mysql"
 
   monitoring_interval = "60"
   monitoring_role_arn = aws_iam_role.enhanced_monitoring.arn
