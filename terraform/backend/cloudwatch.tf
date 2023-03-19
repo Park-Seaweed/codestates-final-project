@@ -9,8 +9,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs-service-cpu-high" {
   threshold           = "50"
 
   dimensions = {
-    ClusterName = final-test-ecs-cluster
-    ServiceName = final-ecs-service
+    ClusterName = "final-test-ecs-cluster"
+    ServiceName = "final-ecs-service"
   }
 
   alarm_description = "This metric monitors ecs cpu utilization"
@@ -28,8 +28,8 @@ resource "aws_cloudwatch_metric_alarm" "ecs-service-cpu-low" {
   threshold           = "40"
 
   dimensions = {
-    ClusterName = final-test-ecs-cluster
-    ServiceName = final-ecs-service
+    ClusterName = "final-test-ecs-cluster"
+    ServiceName = "final-ecs-service"
   }
 
   alarm_description = "This metric monitors ecs cpu utilization"

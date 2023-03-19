@@ -15,7 +15,7 @@ resource "aws_lambda_function" "ecs-scaling-alert-handler" {
 
   environment {
     variables = {
-      HOOK_URL = "https://hooks.slack.com/services/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"
+      HOOK_URL      = "https://hooks.slack.com/services/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"
       SLACK_CHANNEL = "#lambda"
     }
   }
@@ -72,8 +72,8 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-scaling-alert-handler-lambda-policy-attch" {
-  role       = ecs-scaling-alert-handler-lambda-cloudwatch-logs-role.name
-  policy_arn = ecs-scaling-alert-handler-lambda-policy.arn
+  role       = aws_iam_role.ecs-scaling-alert-handler-lambda-cloudwatch-logs-role.name
+  policy_arn = aws_iam_policy.ecs-scaling-alert-handler-lambda-policy.arn
 }
 
 resource "aws_lambda_permission" "ecs-scaling-alert-handler-lambda-permission" {
