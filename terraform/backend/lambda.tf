@@ -1,7 +1,7 @@
 data "archive_file" "ecs-scaling-alert-handler-lambda-dir-zip" {
   type        = "zip"
-  output_path = "/tmp/lambda_dir_zip.zip"
-  source_dir  = "./src"
+  output_path = "lambda_dir_zip.zip"
+  source_dir  = "src"
 }
 
 resource "aws_lambda_function" "ecs-scaling-alert-handler" {
