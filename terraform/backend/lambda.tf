@@ -1,12 +1,12 @@
-data "archive_file" "ecs-scaling-alert-handler-labmda-dir-zip" {
+data "archive_file" "ecs-scaling-alert-handler-lambda-dir-zip" {
   type        = "zip"
   output_path = "/tmp/lambda_dir_zip.zip"
   source_dir  = "./src"
 }
 
 resource "aws_lambda_function" "ecs-scaling-alert-handler" {
-  filename         = data.archive_file.ecs-scaling-alert-handler-labmda-dir-zip.output_path
-  source_code_hash = data.archive_file.ecs-scaling-alert-handler-labmda-dir-zip.output_base64sha256
+  filename         = data.archive_file.ecs-scaling-alert-handler-lambda-dir-zip.output_path
+  source_code_hash = data.archive_file.ecs-scaling-alert-handler-lambda-dir-zip.output_base64sha256
   function_name    = "ecs-scaling-alert-handler"
   role             = aws_iam_role.ecs-scaling-alert-handler-lambda-cloudwatch-logs-role.arn
   handler          = "ecs-scaling-alert-handler.lambda_handler"

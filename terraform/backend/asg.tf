@@ -39,7 +39,7 @@ resource "aws_appautoscaling_policy" "ecs_scale_down_policy" {
 resource "aws_appautoscaling_target" "scale_target" {
   max_capacity       = 4
   min_capacity       = 2
-  resource_id        = "service/final-test-ecs-cluster/final-ecs-service"
+  resource_id        = "service/${aws_ecs_cluster.final_ecs_cluster.name}/${aws_ecs_service.final_ecs_service.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
 }
