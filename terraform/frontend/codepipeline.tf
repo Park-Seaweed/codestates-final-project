@@ -7,7 +7,6 @@ resource "aws_codepipeline" "pipeline" {
   location = aws_s3_bucket.artifact_bucket.bucket
   type     = "S3"
 }
-
   stage {
     name = "Source"
     action {
@@ -77,7 +76,8 @@ data "aws_iam_policy_document" "codepipeline_policy" {
     resources = [
       aws_s3_bucket.artifact_bucket.arn,
       aws_s3_bucket.demo-tf-test-bucket.arn,
-      "${aws_s3_bucket.artifact_bucket.arn}/*"
+      "${aws_s3_bucket.artifact_bucket.arn}/*",
+      "${aws_s3_bucket.demo-tf-test-bucket.arn}/*"
     ]
   }
   statement {
