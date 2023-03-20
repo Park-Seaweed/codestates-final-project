@@ -39,25 +39,17 @@ resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket = aws_s3_bucket.demo-tf-test-bucket.id
   policy = <<EOF
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowAccessIdentity",
-      "Action": "s3:GetObject",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Resource": "${aws_s3_bucket.demo-tf-test-bucket.arn}/*"
-    },
-    {
-      "Sid": "AllowListBucketFromCFwes",
-      "Action": "s3:ListBucket",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "${aws_cloudfront_origin_access_identity.demo-s3-project04.iam_arn}"
-      },
-      "Resource": "${aws_s3_bucket.demo-tf-test-bucket.arn}/*"
-    }
-  ]
+	"Id": "Policy1679298518645",
+	"Version": "2012-10-17",
+	"Statement": [{
+		"Sid": "Stmt1679298510533",
+		"Action": [
+			"s3:GetObject"
+		],
+		"Effect": "Allow",
+		"Resource": "${aws_s3_bucket.demo-tf-test-bucket.arn}/*",
+		"Principal": "*"
+	}]
 }
 EOF
 }
