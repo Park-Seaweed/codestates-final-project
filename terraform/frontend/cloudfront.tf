@@ -32,11 +32,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
   price_class  = "PriceClass_All"
   http_version = "http2"
-  logging_config {
-    bucket          = aws_s3_bucket.demo-tf-test-bucket-log.bucket_domain_name
-    include_cookies = true
-    prefix          = "demo"
-  }
   viewer_certificate {
     acm_certificate_arn      = "arn:aws:acm:us-east-1:901512289056:certificate/6b980158-33fc-4956-9695-c1fe2d8bd460"
     minimum_protocol_version = "TLSv1.2_2021"
