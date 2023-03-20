@@ -71,7 +71,9 @@ resource "aws_s3_bucket_policy" "allow_access_from_another_account_log" {
       {
         "Sid" : "Stmt1678943829050",
         "Effect" : "Allow",
-        "Principal" : "*",
+        "Principal" : {
+          "AWS" : "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${aws_cloudfront_origin_access_identity.demo-s3-project04.etag}"
+        },
         "Action" : "s3:PutObject",
         "Resource" : "${aws_s3_bucket.demo-tf-test-bucket-log.arn}/*"
       }

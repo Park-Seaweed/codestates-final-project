@@ -12,7 +12,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = aws_s3_bucket.demo-tf-test-bucket.bucket_regional_domain_name
     origin_id   = aws_s3_bucket.demo-tf-test-bucket.id
+
     origin_access_control_id = aws_cloudfront_origin_access_control.example.id
+
   }
   enabled             = true
   is_ipv6_enabled     = true
@@ -44,6 +46,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   restrictions {
     geo_restriction {
       restriction_type = "none"
+    }
+    s3_origin_access_identity {
+      identity = aws_cloudfront_origin_access_identity.demo-s3-project04.id
     }
   }
 }
