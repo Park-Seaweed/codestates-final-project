@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       restriction_type = "none"
     }
     s3_origin_access_identity {
-      identity = aws_cloudfront_origin_access_identity.demo-s3-project04.cloudfront_access_identity_path
+      identity = aws_cloudfront_origin_access_identity.demo-s3-project04.id
     }
   }
 }
