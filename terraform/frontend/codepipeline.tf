@@ -4,9 +4,9 @@ resource "aws_codepipeline" "pipeline" {
   name     = "${var.source_repo_name}-${var.source_repo_branch}-Pipeline"
   role_arn = aws_iam_role.codepipeline_role.arn
   artifact_store {
-  location = aws_s3_bucket.artifact_bucket.bucket
-  type     = "S3"
-}
+    location = aws_s3_bucket.artifact_bucket.bucket
+    type     = "S3"
+  }
   stage {
     name = "Source"
     action {
@@ -17,11 +17,11 @@ resource "aws_codepipeline" "pipeline" {
       provider         = "CodeStarSourceConnection"
       output_artifacts = ["source_output"]
 
-      
+
       configuration = {
-        FullRepositoryId     = "${var.github_Owner}/${var.source_repo_name}"
-        BranchName           = var.source_repo_branch
-        ConnectionArn        = aws_codestarconnections_connection.github_connection.arn
+        FullRepositoryId = "${var.github_Owner}/${var.source_repo_name}"
+        BranchName       = var.source_repo_branch
+        ConnectionArn    = aws_codestarconnections_connection.github_connection.arn
       }
     }
   }
@@ -63,7 +63,7 @@ resource "aws_codepipeline" "pipeline" {
 #iam policy
 data "aws_iam_policy_document" "codepipeline_policy" {
   statement {
-    effect    = "Allow"
+    effect = "Allow"
 
     actions = [
       "s3:PutObject",
@@ -81,11 +81,11 @@ data "aws_iam_policy_document" "codepipeline_policy" {
     ]
   }
   statement {
-    effect   = "Allow"
-    actions  = ["codestar-connections:UseConnection"]
+    effect    = "Allow"
+    actions   = ["codestar-connections:UseConnection"]
     resources = ["*"]
   }
-    statement {
+  statement {
     effect = "Allow"
 
     actions = [
@@ -100,7 +100,7 @@ data "aws_iam_policy_document" "codepipeline_policy" {
 
 data "aws_iam_policy_document" "assume_role" {
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = ["sts:AssumeRole"]
 
     principals {
@@ -116,7 +116,7 @@ resource "aws_iam_role" "codepipeline_role" {
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
-  name       = "codepipeline_policy"
-  role       = aws_iam_role.codepipeline_role.id
+  name   = "codepipeline_policy"
+  role   = aws_iam_role.codepipeline_role.id
   policy = data.aws_iam_policy_document.codepipeline_policy.json
 }

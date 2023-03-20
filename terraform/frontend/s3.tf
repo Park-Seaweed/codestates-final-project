@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "demo-tf-test-bucket" {
   website {
     index_document = "index.html"
     error_document = "index.html"
-    }
+  }
 
   versioning {
     enabled = true
@@ -33,29 +33,21 @@ resource "aws_s3_bucket_public_access_block" "s3_public_access" {
   restrict_public_buckets = true
 }
 
-data "aws_iam_policy_document" "policy_one" {
-  statement {
-    sid = "bucketPolicy"
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
-    effect = "Allow"
-    actions   = [
-      "s3:GetObject",
-      "s3:ListBucket",
-    ]
-    resources = [
-      aws_s3_bucket.demo-tf-test-bucket.arn,
-      "${aws_s3_bucket.demo-tf-test-bucket.arn}/*",
-    ]
-  }
-}
-
 #aws_s3_bucket_policy
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket = aws_s3_bucket.demo-tf-test-bucket.id
-  policy = data.aws_iam_policy_document.policy_one.json
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Id" : "Policy1678943829919",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : "*",
+        "Action" : "s3:GetObject",
+        "Resource" : "${aws_s3_bucket.demo-tf-test-bucket.arn}/*"
+      }
+    ]
+  })
 }
 
 # aws_s3_bucket_server_side_encryption_configuration
@@ -88,16 +80,16 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "key_encryption_lo
 resource "aws_s3_bucket_policy" "allow_access_from_another_account_log" {
   bucket = aws_s3_bucket.demo-tf-test-bucket-log.id
   policy = jsonencode({
-    "Version": "2012-10-17",
-    "Id": "Policy1678943829919",
-    "Statement": [
-        {
-            "Sid": "Stmt1678943829050",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:PutObject",
-            "Resource": "${aws_s3_bucket.demo-tf-test-bucket-log.arn}/*"
-        }
+    "Version" : "2012-10-17",
+    "Id" : "Policy1678943829919",
+    "Statement" : [
+      {
+        "Sid" : "Stmt1678943829050",
+        "Effect" : "Allow",
+        "Principal" : "*",
+        "Action" : "s3:PutObject",
+        "Resource" : "${aws_s3_bucket.demo-tf-test-bucket-log.arn}/*"
+      }
     ]
   })
 }

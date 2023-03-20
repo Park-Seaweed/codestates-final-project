@@ -1,5 +1,5 @@
 resource "aws_iam_role" "codebuild_role" {
-  name = "terraform-codebuild"
+  name               = "terraform-codebuild"
   assume_role_policy = <<EOF
 {
    "Version": "2012-10-17",
@@ -76,7 +76,7 @@ resource "aws_codebuild_project" "codebuild" {
   artifacts {
     type = "CODEPIPELINE"
   }
-  
+
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "aws/codebuild/standard:5.0"
