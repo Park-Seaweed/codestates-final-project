@@ -33,25 +33,24 @@ resource "aws_s3_bucket_public_access_block" "s3_public_access" {
   restrict_public_buckets = true
 }
 
+data "aws_iam_policy_document" "policy_one" {
+  statement {
+    sid    = "Stmt1679298510533"
+    effect = "Allow"
+
+    actions   = ["
+      s3:GetObject",
+    ]
+    resources = [
+      "aws_s3_bucket.demo-tf-test-bucket.arn/*"
+    ]
+  }
+}
 
 #aws_s3_bucket_policy
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket = aws_s3_bucket.demo-tf-test-bucket.id
-  policy = <<EOF
-{
-	"Id": "Policy1679298518645",
-	"Version": "2012-10-17",
-	"Statement": [{
-		"Sid": "Stmt1679298510533",
-		"Action": [
-			"s3:GetObject"
-		],
-		"Effect": "Allow",
-		"Resource": "${aws_s3_bucket.demo-tf-test-bucket.arn}/*",
-		"Principal": "*"
-	}]
-}
-EOF
+  policy = data.aws_iam_policy_document.policy_one.json
 }
 
 # aws_s3_bucket_server_side_encryption_configuration
