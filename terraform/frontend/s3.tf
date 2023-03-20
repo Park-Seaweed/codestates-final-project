@@ -37,26 +37,29 @@ resource "aws_s3_bucket_public_access_block" "s3_public_access" {
 #aws_s3_bucket_policy
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket = aws_s3_bucket.demo-tf-test-bucket.id
-  policy = jsonencode({
-    "Version": "2008-10-17",
-    "Id": "PolicyForCloudFrontPrivateContent",
-    "Statement": [
-      {
-        "Sid": "AllowCloudFrontServicePrincipal",
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "cloudfront.amazonaws.com"
-        },
-        "Action": "s3:GetObject",
-        "Resource": "${aws_s3_bucket.demo-tf-test-bucket.arn}/*",
-        "Condition": {
-          "StringEquals": {
-            "AWS:SourceArn": "${aws_cloudfront_distribution.s3_distribution.arn}"
-          }
-        }
-      }
-    ]
-  })
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowAccessIdentity",
+      "Action": "s3:GetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Resource": "${aws_s3_bucket.demo-tf-test-bucket.arn}/*"
+    },
+    {
+      "Sid": "AllowListBucketFromCFwes",
+      "Action": "s3:ListBucket",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "${aws_cloudfront_origin_access_identity.demo-s3-project04.iam_arn}"
+      },
+      "Resource": "${aws_s3_bucket.demo-tf-test-bucket.arn}/*"
+    }
+  ]
+}
+EOF
 }
 
 # aws_s3_bucket_server_side_encryption_configuration
