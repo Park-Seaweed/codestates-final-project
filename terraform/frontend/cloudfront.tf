@@ -27,7 +27,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     price_class = "PriceClass_All"
     http_version = "http2"
   logging_config {
-    bucket        = demo-tf-test-bucket-log.s3.amazonaws.com
+    bucket        = "demo-tf-test-bucket-log.s3.amazonaws.com"
     include_cookies = true
     prefix          = "demo"
   }
