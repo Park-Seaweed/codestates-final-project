@@ -47,9 +47,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     geo_restriction {
       restriction_type = "none"
     }
-    s3_origin_access_identity {
-      identity = aws_cloudfront_origin_access_identity.demo-s3-project04.id
-    }
   }
 }
 
