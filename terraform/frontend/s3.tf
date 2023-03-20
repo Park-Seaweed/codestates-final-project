@@ -44,7 +44,7 @@ resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
 	"Statement": [{
 		"Sid": "Stmt1679298510533",
 		"Action": [
-			"s3:GetObject",
+			"s3:GetObject"
 		],
 		"Effect": "Allow",
 		"Resource": "${aws_s3_bucket.demo-tf-test-bucket.arn}/*",
