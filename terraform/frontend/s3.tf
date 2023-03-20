@@ -38,11 +38,11 @@ data "aws_iam_policy_document" "policy_one" {
     sid    = "Stmt1679298510533"
     effect = "Allow"
 
-    actions   = ["
-      s3:GetObject",
+    actions   = [
+      "s3:GetObject",
     ]
     resources = [
-      "aws_s3_bucket.demo-tf-test-bucket.arn/*"
+      "${aws_s3_bucket.demo-tf-test-bucket.arn}/*",
     ]
   }
 }
