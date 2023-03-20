@@ -33,7 +33,7 @@ resource "aws_iam_policy" "codebuild_policy" {
         "s3:GetObject", "s3:GetObjectVersion", "s3:PutObject", "s3:GetBucketAcl", "s3:GetBucketLocation", "codestar-connections:UseConnection"
       ],
       "Effect": "Allow",
-     "resource": [
+     "Resource": [
 				"${aws_s3_bucket.artifact_bucket.arn}/*",
 				"${aws_s3_bucket.demo-tf-test-bucket.arn}/*"
       ]
