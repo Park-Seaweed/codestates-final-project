@@ -1,14 +1,18 @@
 resource "aws_cloudfront_origin_access_identity" "demo-s3-project04" {
   comment = "this is a test distribution"
 }
-
+resource "aws_cloudfront_origin_access_control" "example" {
+  name                              = "example"
+  description                       = "Example Policy"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = aws_s3_bucket.demo-tf-test-bucket.bucket_regional_domain_name
     origin_id   = aws_s3_bucket.demo-tf-test-bucket.id
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.demo-s3-project04.cloudfront_access_identity_path
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.example.id
   }
   enabled             = true
   is_ipv6_enabled     = true
