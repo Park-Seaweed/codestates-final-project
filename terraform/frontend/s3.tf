@@ -35,17 +35,18 @@ resource "aws_s3_bucket_public_access_block" "s3_public_access" {
 
 data "aws_iam_policy_document" "policy_one" {
   statement {
-    sid    = "Stmt1679298510533"
-
-    principals = "*"
-    
+    sid = "bucketPolicy"
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
     effect = "Allow"
-
     actions   = [
       "s3:GetObject",
+      "s3:ListBucket",
     ]
-
     resources = [
+      aws_s3_bucket.demo-tf-test-bucket.arn,
       "${aws_s3_bucket.demo-tf-test-bucket.arn}/*",
     ]
   }
