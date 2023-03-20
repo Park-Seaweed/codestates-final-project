@@ -7,7 +7,6 @@ resource "aws_s3_bucket" "artifact_bucket" {
 #s3 deploy
 resource "aws_s3_bucket" "demo-tf-test-bucket" {
   bucket = "demo-tf-test-bucket"
-  acl    = "private"
 
   website {
     index_document = "index.html"
@@ -17,6 +16,11 @@ resource "aws_s3_bucket" "demo-tf-test-bucket" {
   versioning {
     enabled = true
   }
+}
+
+resource "aws_s3_bucket_acl" "demo-tf-test-bucket-acl" {
+  bucket = aws_s3_bucket.demo-tf-test-bucket.id
+  acl    = "private"
 }
 
 # aws_s3_bucket_public_access_block
