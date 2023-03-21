@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "devops03-gg.click"
+  domain_name       = "*.devops03-gg.click"
   validation_method = "DNS"
 
   tags = {
