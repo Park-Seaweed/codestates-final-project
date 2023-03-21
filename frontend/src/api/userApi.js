@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const userApiInstance = axios.create({
-  baseURL: process.env.BACK_END_URL,
+  baseURL: process.env.REACT_APP_BACK_END_URL,
 });
 
 export const userApi = {
