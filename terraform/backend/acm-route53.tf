@@ -47,7 +47,7 @@ resource "aws_lb_listener" "https" {
 }
 
 resource "aws_route53_record" "alb" {
-  name    = "dev.devops03-gg.click"
+  name    = "api.devops03-gg.click"
   type    = "A"
   zone_id = var.zone_id
 
