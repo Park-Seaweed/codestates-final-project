@@ -19,7 +19,7 @@
         "volumesFrom": [],
         "secrets": [
             {
-                "name": "WRITE_HOSTNAME",
+                "name": "WRITE_ENDPOINT",
                 "valueFrom": "${db_write_hostname}:WRITE_ENDPOINT::"
             },
             {
@@ -31,7 +31,7 @@
                 "valueFrom": "${database}:DATABASE::"
             },
             {
-                "name": "READ_HOSTNAME",
+                "name": "READ_ENDPOINT",
                 "valueFrom": "${db_reader_hostname}:READ_ENDPOINT::"
             },
             {
