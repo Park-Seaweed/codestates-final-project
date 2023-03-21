@@ -1,6 +1,6 @@
 #s3 data
 resource "aws_s3_bucket" "artifact_bucket" {
-  bucket = "s3-pipeline-3"
+  bucket = "dev-s3-pipeline-1"
 }
 
 #s3 deploy
