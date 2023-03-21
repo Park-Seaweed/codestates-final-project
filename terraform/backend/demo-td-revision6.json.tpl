@@ -20,7 +20,7 @@
         "secrets": [
             {
                 "name": "WRITE_HOSTNAME",
-                "valueFrom": "${db_write_hostname}:WRITE_HOSTNAME::"
+                "valueFrom": "${db_write_hostname}:WRITE_ENDPOINT::"
             },
             {
                 "name": "PASSWORD",
@@ -32,7 +32,7 @@
             },
             {
                 "name": "READ_HOSTNAME",
-                "valueFrom": "${db_reader_hostname}:READ_HOSTNAME::"
+                "valueFrom": "${db_reader_hostname}:READ_ENDPOINT::"
             },
             {
                 "name": "USERNAME",
