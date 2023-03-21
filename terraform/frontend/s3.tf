@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "artifact_bucket" {
 
 #s3 deploy
 resource "aws_s3_bucket" "demo-tf-test-bucket" {
-  bucket = "dev-tf-bucket"
+  bucket = "dev-www.devops03gg.click"
 
   website {
     index_document = "index.html"
