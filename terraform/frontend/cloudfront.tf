@@ -21,7 +21,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   comment             = "Some comment"
   default_root_object = "index.html"
 
-  aliases = ["test.devops03-gg.click"]
+  aliases = ["www.devops03-gg.click"]
 
   default_cache_behavior {
     allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
@@ -33,7 +33,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   price_class  = "PriceClass_All"
   http_version = "http2"
   viewer_certificate {
-    acm_certificate_arn      = "arn:aws:acm:us-east-1:901512289056:certificate/6b980158-33fc-4956-9695-c1fe2d8bd460"
+    acm_certificate_arn      = "arn:aws:acm:us-east-1:901512289056:certificate/7a8de1cc-6c59-4dd4-830c-1b2f3d50998a"
     minimum_protocol_version = "TLSv1.2_2021"
     ssl_support_method       = "sni-only"
   }
