@@ -34,7 +34,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       "response_code"       = 200
       "response_page_path"  = "/index.html"
     }
-]
+  ]
 
   default_cache_behavior {
     allowed_methods        = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
