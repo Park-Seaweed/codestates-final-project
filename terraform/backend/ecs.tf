@@ -39,6 +39,46 @@ resource "aws_iam_policy" "secretsmanager_policy" {
   })
 }
 
+resource "aws_iam_policy" "ecs_service_scaling" {
+  name = "dev-to-scaling"
+  path = "/"
+  description = "Allow ecs service scaling"
+
+  policy = data.aws_iam_policy_document.ecs_service_scaling.json
+}
+
+data "aws_iam_policy_document" "ecs_service_scaling" {
+
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "application-autoscaling:*",
+      "ecs:DescribeServices",
+      "ecs:UpdateService",
+      "cloudwatch:DescribeAlarms",
+      "cloudwatch:PutMetricAlarm",
+      "cloudwatch:DeleteAlarms",
+      "cloudwatch:DescribeAlarmHistory",
+      "cloudwatch:DescribeAlarms",
+      "cloudwatch:DescribeAlarmsForMetric",
+      "cloudwatch:GetMetricStatistics",
+      "cloudwatch:ListMetrics",
+      "cloudwatch:PutMetricAlarm",
+      "cloudwatch:DisableAlarmActions",
+      "cloudwatch:EnableAlarmActions",
+      "iam:CreateServiceLinkedRole",
+      "sns:CreateTopic",
+      "sns:Subscribe",
+      "sns:Get*",
+      "sns:List*"
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
+}
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
@@ -50,7 +90,10 @@ resource "aws_iam_role_policy_attachment" "secretsmanager_attachment" {
   role       = aws_iam_role.ecs_task_execution_role.name
 }
 
-
+resource "aws_iam_role_policy_attachment" "ecs_service_scaling" {
+  role = aws_iam_role.ecs_task_execution_role.name
+  policy_arn = aws_iam_policy.ecs_service_scaling.arn
+}
 
 resource "aws_ecs_service" "final_ecs_service" {
 
@@ -88,9 +131,6 @@ data "template_file" "service" {
     database              = data.aws_secretsmanager_secret.rds_database.arn
     aws_access_key_id     = data.aws_secretsmanager_secret.aws_access_key_id.arn
     aws_secret_access_key = data.aws_secretsmanager_secret.aws_secret_access_key.arn
-
-
-
   }
 }
 
@@ -102,6 +142,7 @@ resource "aws_ecs_task_definition" "final_ecs_task_definition" {
   memory                   = "1024"
 
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
   container_definitions = data.template_file.service.rendered
 }
