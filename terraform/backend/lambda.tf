@@ -9,7 +9,7 @@ resource "aws_lambda_function" "ecs-scaling-alert-handler" {
   source_code_hash = data.archive_file.ecs-scaling-alert-handler-lambda-dir-zip.output_base64sha256
   function_name    = "ecs-scaling-alert-handler"
   role             = aws_iam_role.ecs-scaling-alert-handler-lambda-cloudwatch-logs-role.arn
-  handler          = "ecs-scaling-alert-handler.lambda_handler"
+  handler          = "lambda_function.lambda_handler"
 
   runtime = "python3.7"
 

@@ -33,14 +33,13 @@ def lambda_handler(event, context):
     comparison_operator = message['Trigger']['ComparisonOperator']
     period = message['Trigger']['Period']
     evaluation_periods = message['Trigger']['EvaluationPeriods']
-    datapoints_to_alarm = message['Trigger']['DatapointsToAlarm']
     current_state = message['NewStateValue']
     reason = message['NewStateReason']
     timestamp = convert_kst(message['StateChangeTime'])
 
     slack_message = {
         'channel': SLACK_CHANNEL,
-        'text': f'Auto Scaling 그룹 {alarm_name} 에서 경보를 트리거했습니다.\n\n*Details:*\n- 경보 이름: {alarm_name}\n- 지표 이름: {metric_name}\n- 임계값: {threshold}%\n- 연산자: {comparison_operator}\n- 평가 기간: {period}s\n- 기준을 위반하는 데이터포인트 수: {evaluation_periods}\n- 경보를 알릴 데이터포인트 수: {datapoints_to_alarm}\n- 경보 발생 이 이유: {reason}\n- 현재 상태: {current_state}\n- 경보 발생 시간: {timestamp}\n\n'
+        'text': f'Auto Scaling 그룹 {alarm_name} 에서 경보를 트리거했습니다.\n\n*Details:*\n- 경보 이름: {alarm_name}\n- 지표 이름: {metric_name}\n- 임계값: {threshold}%\n- 연산자: {comparison_operator}\n- 평가 기간: {period}s\n- 기준을 위반하는 데이터포인트 수: {evaluation_periods}\n- 경보 발생 이 이유: {reason}\n- 현재 상태: {current_state}\n- 경보 발생 시간: {timestamp}\n\n'
     }
 
     req = Request(HOOK_URL, json.dumps(slack_message).encode('utf-8'))
@@ -52,3 +51,4 @@ def lambda_handler(event, context):
         logger.error("Request failed: %d %s", e.code, e.reason)
     except URLError as e:
         logger.error("Server connection failed: %s", e.reason)
+
