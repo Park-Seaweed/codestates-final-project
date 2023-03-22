@@ -8,7 +8,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
   backup_retention_period         = 1
   preferred_backup_window         = "07:00-09:00"
   skip_final_snapshot             = true
-  db_cluster_parameter_group_name = aws_db_parameter_group.rds_pg.name
+  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.rds_pg.name
   availability_zones = [
     "ap-northeast-2a",
     "ap-northeast-2b"
@@ -60,8 +60,9 @@ resource "aws_iam_role_policy_attachment" "rds_policy" {
 }
 
 
-resource "aws_db_parameter_group" "rds_pg" {
-  name   = "final-rds-pg"
+resource "aws_rds_cluster_parameter_group" "rds_pg" {
+  name = "final-rds-cluster-pg"
+
   family = "aurora-mysql5.7"
 
   parameter {
