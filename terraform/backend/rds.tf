@@ -1,13 +1,14 @@
 resource "aws_rds_cluster" "aurora_cluster" {
-  cluster_identifier      = "aurora-cluster"
-  engine                  = "aurora-mysql"
-  engine_version          = "5.7.mysql_aurora.2.11.1"
-  database_name           = var.database
-  master_username         = var.database_name
-  master_password         = var.database_passward
-  backup_retention_period = 1
-  preferred_backup_window = "07:00-09:00"
-  skip_final_snapshot     = true
+  cluster_identifier              = "aurora-cluster"
+  engine                          = "aurora-mysql"
+  engine_version                  = "5.7.mysql_aurora.2.11.1"
+  database_name                   = var.database
+  master_username                 = var.database_name
+  master_password                 = var.database_passward
+  backup_retention_period         = 1
+  preferred_backup_window         = "07:00-09:00"
+  skip_final_snapshot             = true
+  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.rds_pg.name
   availability_zones = [
     "ap-northeast-2a",
     "ap-northeast-2b"
@@ -56,4 +57,16 @@ resource "aws_iam_role" "enhanced_monitoring" {
 resource "aws_iam_role_policy_attachment" "rds_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
   role       = aws_iam_role.enhanced_monitoring.name
+}
+
+
+resource "aws_rds_cluster_parameter_group" "rds_pg" {
+  name = "final-rds-cluster-pg"
+
+  family = "aurora-mysql5.7"
+
+  parameter {
+    name  = "time_zone"
+    value = "Asia/Seoul"
+  }
 }
