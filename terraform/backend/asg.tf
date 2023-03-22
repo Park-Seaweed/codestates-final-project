@@ -11,8 +11,14 @@ resource "aws_appautoscaling_policy" "ecs_scale_up_policy" {
     metric_aggregation_type = "Maximum"
 
     step_adjustment {
-      metric_interval_upper_bound = 0
+      metric_interval_lower_bound = 0
+      metric_interval_upper_bound = 20
       scaling_adjustment          = 1
+    }
+
+    step_adjustment {
+      metric_interval_lower_bound = 20
+      scaling_adjustment          = 2
     }
   }
 }
@@ -30,8 +36,14 @@ resource "aws_appautoscaling_policy" "ecs_scale_down_policy" {
     metric_aggregation_type = "Maximum"
 
     step_adjustment {
+      metric_interval_lower_bound = -20
       metric_interval_upper_bound = 0
       scaling_adjustment          = -1
+    }
+
+    step_adjustment {
+      metric_interval_upper_bound = -20
+      scaling_adjustment          = -2
     }
   }
 }
