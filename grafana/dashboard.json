@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 12,
-  "iteration": 1679288300257,
+  "iteration": 1679551062388,
   "links": [],
   "liveNow": true,
   "panels": [
@@ -5740,61 +5740,22 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "DevCluster",
-          "value": "DevCluster"
+          "selected": true,
+          "text": "final-test-ecs-cluster",
+          "value": "final-test-ecs-cluster"
         },
         "datasource": {
           "type": "cloudwatch",
           "uid": "${datasource}"
         },
-        "definition": "dimension_values($default_region,AWS/ECS,CPUUtilization,ClusterName)",
-        "error": {
-          "config": {
-            "data": {
-              "from": "1678683499434",
-              "queries": [
-                {
-                  "datasource": {
-                    "type": "cloudwatch",
-                    "uid": "ZCfGpoa4z"
-                  },
-                  "dimensionKey": "ClusterName",
-                  "dimensions": {},
-                  "intervalMs": 1,
-                  "maxDataPoints": 1,
-                  "metricName": "CPUUtilization",
-                  "namespace": "AWS/ECS",
-                  "refId": "metricFindQuery",
-                  "region": "$default_region",
-                  "subtype": "dimension_values",
-                  "type": "metricFindQuery"
-                }
-              ],
-              "to": "1679288299434"
-            },
-            "headers": {
-              "X-Grafana-Org-Id": 1
-            },
-            "hideFromInspector": false,
-            "method": "POST",
-            "retry": 0,
-            "url": "api/ds/query"
-          },
-          "data": {
-            "message": "Query data error"
-          },
-          "message": "Query data error",
-          "status": 500,
-          "statusText": "Internal Server Error"
-        },
+        "definition": "dimension_values($region,AWS/ECS,CPUUtilization,ClusterName)",
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
         "multi": false,
         "name": "cluster",
         "options": [],
-        "query": "dimension_values($default_region,AWS/ECS,CPUUtilization,ClusterName)",
+        "query": "dimension_values($region,AWS/ECS,CPUUtilization,ClusterName)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -5903,46 +5864,6 @@
       },
       {
         "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "query0",
-        "options": [],
-        "query": "",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "query1",
-        "options": [],
-        "query": "",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "current": {
           "selected": false,
           "text": "app/demo-alb/3bb55b15406cb314",
           "value": "app/demo-alb/3bb55b15406cb314"
@@ -5963,26 +5884,6 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "type": "query"
-      },
-      {
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "query2",
-        "options": [],
-        "query": "",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
@@ -6047,29 +5948,13 @@
       },
       {
         "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "readdb",
-        "options": [],
-        "query": "",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "database-1-instance-1-ap-northeast-2a",
-          "value": "database-1-instance-1-ap-northeast-2a"
+          "selected": true,
+          "text": [
+            "database-1-instance-1-ap-northeast-2a"
+          ],
+          "value": [
+            "database-1-instance-1-ap-northeast-2a"
+          ]
         },
         "definition": "dimension_values($region, AWS/RDS, CPUUtilization, DBInstanceIdentifier)",
         "hide": 0,
@@ -6087,7 +5972,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "database-1-instance-1",
           "value": "database-1-instance-1"
         },
@@ -6117,6 +6002,6 @@
   "timezone": "",
   "title": "광훈's 대시보드",
   "uid": "UPzIXTa4z",
-  "version": 84,
+  "version": 90,
   "weekStart": ""
 }
