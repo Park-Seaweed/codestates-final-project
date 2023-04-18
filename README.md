@@ -1,17 +1,15 @@
 ## ✨ 프로젝트 소개
 
-### 고가용성 글로벌 팬사이트 <br><br>
+### 고가용성 글로벌 팬사이트 <br>
 
-<br><br>
  시나리오는 아이돌 팬사이트가 글로벌 트래픽이 증가했을 때 순간적으로 급증하는 트래픽에 대응하고 빠르게 인프라를 구성, <br>
  무중단으로 웹서버를 배포하여 사용자가 서비스를 이용할 때 발생하는 다운타임을 최소화하는 시나리오입니다.
 <br>
 
 
-
 - **[발표 자료](https://docs.google.com/presentation/d/13tJ_gnHv7RO3KuGKWGPG14OrM1K35mICUmn3lk0w_ic/edit?usp=sharing)<br>**
-  <br>
-  <br>
+
+<br>
 
 ## 📆 프로젝트 기간 <br>
 
@@ -21,7 +19,6 @@
 </ul>
 
 
-<br>
 <br>
 
 ## 📖 서비스 아키텍쳐<br>
@@ -77,6 +74,22 @@
 <br>
 
 ## 📌 주요 기능
+
+<details> 
+  <summary><strong>Cognito를 이용한 회원가입,로그인<br></strong></summary><br>
+
+![회원가입](https://user-images.githubusercontent.com/118946694/227525192-1cd2bd02-63b9-4a05-b3dd-f15a742c4940.gif)
+ 
+ 개발의 편의성을 위해 회원가입 및 로그인 인증을 AWS SDK를 이용해 Cognito를 이용해 백엔드에서 로직을 구현했으며 데이터베이스에는 회원가입한 유저의 정보를 저장하지않고 닉네임만을 저장합니다.
+ 또한 회원가입시 email과 닉네임을 받아서 로그인시 토큰을 발행하여 프론트로 보내게됩니다.
+ 
+ ![crud구현](https://user-images.githubusercontent.com/118946694/227525266-75bf2ae7-4550-40b2-9dc4-147222ffa69d.gif)
+ 로그인한 회원은 글작성시 AWS SDK Cognito로 API요청을 보내게되면 닉네임이 리턴되며 닉네임을 통해 작성자를 구분하고 글을 수정, 삭제시 토큰을 통해 인증하게됩니다.
+ 
+
+
+<br>  
+</details>
 
 <details> 
   <summary><strong>Terraform IaC 배포 아키텍처<br></strong></summary><br>
@@ -151,8 +164,8 @@
 |[박민혁](https://github.com/Park-Seaweed) 리더|[권광훈](https://github.com/gangdonguri)|[박예빈](https://github.com/yebinnn)|[김민지](https://github.com/si946bi)|
 |:---:|:---:|:---:|:---:|
 |<img src="https://img.shields.io/badge/DevOps-000000?style=for-the-badge&logo=&logoColor=white">|<img src="https://img.shields.io/badge/DevOps-000000?style=for-the-badge&logo=&logoColor=white">|<img src="https://img.shields.io/badge/DevOps-000000?style=for-the-badge&logo=&logoColor=white">|<img src="https://img.shields.io/badge/DevOps-000000?style=for-the-badge&logo=&logoColor=white">|
-|![박민혁 미모티콘](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FzR6lR%2FbtrNjzHoynR%2FI4iKHEHRzPhXzKSm8xWxL0%2Fimg.png)|![권광훈 미모티콘](https://user-images.githubusercontent.com/87158339/227462281-977f1b83-211c-48b3-8f9f-c25a4f87b76b.png)|![박예빈 미모티콘](https://user-images.githubusercontent.com/119267181/227461192-be169932-94cf-40b0-a10b-b12fa7afa4bf.png)|![김민지 미모티콘](https://user-images.githubusercontent.com/106081707/227469337-51af3fa5-445f-43e6-8573-f197458c81c8.png)|
-|프론트 코드, 백엔드 코드 작업 및 백엔드 인프라 IaC |모니터링, CI/CD, 알림 시스템 IaC| CI/CD, 모니터링  |CI/CD, 프론트 IaC|
+|![박민혁 미모티콘](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FzR6lR%2FbtrNjzHoynR%2FI4iKHEHRzPhXzKSm8xWxL0%2Fimg.png)|![권광훈 미모티콘](https://user-images.githubusercontent.com/87158339/227462281-977f1b83-211c-48b3-8f9f-c25a4f87b76b.png)|![박예빈 미모티콘](https://user-images.githubusercontent.com/119267181/227461192-be169932-94cf-40b0-a10b-b12fa7afa4bf.png)|![image](https://user-images.githubusercontent.com/119267181/227476007-c2bec33c-1950-4abf-b6f7-eaa1d218af93.png)|
+|프론트 코드, 백엔드 코드 작업 및 백엔드 인프라 IaC |모니터링, CI/CD, <br>알림 시스템 IaC| CI/CD, 모니터링, 아키텍처 구성  |CI/CD, 프론트 IaC, 아키텍처 구성|
 <br>
 
 ## 🔧 기술 스택
@@ -160,15 +173,14 @@
 <br>
 <br>
 
- <p align="center">
- <img src="https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=Terraform&logoColor=white"> 
- <img src="https://img.shields.io/badge/k6-7D64FF?style=for-the-badge&logo=k6&logoColor=white">
- <img src="https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=Grafana&logoColor=white">
- <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white">
- <img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white">
- <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=Slack&logoColor=white">
- <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript
-&logoColor=black">
+<p align="center">
+<img src="https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=Terraform&logoColor=white"> 
+<img src="https://img.shields.io/badge/k6-7D64FF?style=for-the-badge&logo=k6&logoColor=white">
+<img src="https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=Grafana&logoColor=white">
+<img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white">
+<img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white">
+<img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=Slack&logoColor=white">
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black">
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
 <img src="https://img.shields.io/badge/Fastify-000000?style=for-the-badge&logo=Fastify&logoColor=white">
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
@@ -191,6 +203,5 @@
 - **[[ECR] InvalidSignatureException](https://github.com/cs-devops-bootcamp/devops-03-Final-TeamA/discussions/15)<br>**
 - **[[ALB] Network Mappings](https://github.com/cs-devops-bootcamp/devops-03-Final-TeamA/discussions/16)<br>**
 - **[[S3] bucket policy](https://github.com/cs-devops-bootcamp/devops-03-Final-TeamA/discussions/59)<br>**
-- **[[ECS] APP Autoscaling](https://github.com/PerDayOneSpoon/PerDayOneSpoon-BE/wiki/Hikari-pool-time-out)<br>**
 - **[[openVPN] Client 연결 오류](https://github.com/cs-devops-bootcamp/devops-03-Final-TeamA/discussions/64)<br>**
 - **[[CloudFront] S3 접근 제한](https://github.com/cs-devops-bootcamp/devops-03-Final-TeamA/discussions/66)<br>**
